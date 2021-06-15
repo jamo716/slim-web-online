@@ -8,8 +8,6 @@ import "./App.css";
 import BasicTable from "./components/BasicTable"
 import CircularProgress from "@material-ui/core/CircularProgress"
 
-//this is a comment
-
 function App() {
 
   //state variable for whether or not to show the parameter menu
