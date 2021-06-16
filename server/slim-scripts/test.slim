@@ -15,8 +15,13 @@ initialize() {
 
 // create a population of 500 individuals
 1 {
-	//setwd("Users/jameson/Documents/slim-web-online/server/slim-ouput");
-	setwd("/Users/jameson/Documents/slim-web-online/server/slim-output");
+	//make a directory to store output that is named with the id	
+	createDirectory(paste("/Users/jameson/Documents/slim-web-online/server/slim-output/" + asString(id)));
+	//path to read
+	path = paste("/Users/jameson/Documents/slim-web-online/server/slim-output/" + asString(id));
+	//set working directory equal to that path
+	setwd(path);
+	
 	sim.addSubpop("p1", popSize);
 	writeFile("test.csv", paste(c(sim.generation, sim.countOfMutationsOfType(m1)), sep = ","), append = F);
 	print(getwd());

@@ -63,7 +63,7 @@ router.post("/:id", (req, res) => {
 
     const paramSetToRun = paramSetList.filter((paramSet) => paramSet.id === parseInt(req.params.id))[0]
 
-    const child = spawn("slim", ["-d", `mutRate=${paramSetToRun.mutRate}`, "-d", `popSize=${paramSetToRun.popSize}`, "server/slim-scripts/test.slim"])
+    const child = spawn("slim", ["-d", `mutRate=${paramSetToRun.mutRate}`, "-d", `popSize=${paramSetToRun.popSize}`, "-d", `id=${parseInt(req.params.id)}`, "server/slim-scripts/test.slim"])
 
     child.on("exit", (code, signal) => {
       if(code){
@@ -72,7 +72,7 @@ router.post("/:id", (req, res) => {
       if(signal){
           //console.log(signal)
       }
-      fs.createReadStream("server/slim-output/test.csv")
+      fs.createReadStream(`server/slim-output/${parseInt(req.params.id)}/test.csv`)
       .pipe(csv.parse({}))
       .on("data", (data) => {
         const generationOutput = 
