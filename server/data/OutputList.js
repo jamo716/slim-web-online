@@ -1,6 +1,6 @@
 //stores the computed outputs for response as JSON objects
 var outputList = [
-
+    
 ]
 
 //format for how output list should look like

@@ -7,6 +7,7 @@ import {useEffect} from "react"
 import "./App.css";
 import BasicTable from "./components/BasicTable"
 import CircularProgress from "@material-ui/core/CircularProgress"
+import OutputList from "./components/OutputList";
 
 function App() {
 
@@ -19,10 +20,17 @@ function App() {
   //state variable for front end sim output
   const [output, setOutput] = React.useState(null)
 
+  //state variable for list of outputs that have been rendered
+  const [outputs, setOutputs] = React.useState([])
+
   //fetch parameter sets when site first launches with useEffect() function
   useEffect(() => {
     axios.get("/paramSet").then((paramSets) => {
         setParamSets(paramSets.data)
+    })
+
+    axios.get("/output").then((outputs) => {
+      setOutputs(outputs.data)
     })
   }, [])
 
@@ -48,13 +56,20 @@ function App() {
     setParamSets(paramSets.filter((paramSet) => paramSet.id !== id))
   }
 
-  //testing function to submit parameters and get output from command line
-  const receiveOutput = (id) => {
-    setOutput([])
-    axios.get(`/output/${id}`).then((outputToShow) => {
+  //receieves outputs from server and stores them in local state
+  const receiveOutput = () => {
+    axios.get(`/output/`).then((outputToShow) => {
       //going to have to do something with this data
-      setOutput(outputToShow.data)
+      setOutputs(outputToShow.data)
     })
+  }
+
+  //submits a parameter set to be rendered as output on server
+  const renderParameterSet = async (id) => {
+    //wait until the post finishes
+    await axios.post(`/output/${id}`)
+    //then update the front end with all computed outputs
+    receiveOutput()
   }
 
   //decides what the output section of page should display depending on if data is available or not
@@ -80,10 +95,11 @@ function App() {
         <div className="input">
           <Header onToggle={toggleParamMenu}/>
           {showParamMenu && <AddParamsMenu onAdd={addParamSet}/>}
-          {paramSets.length > 0 ? <ParamSets paramSets={paramSets} onDelete={deleteParamSet} onRetrieve={receiveOutput}/> :  "No parameter sets made."}
+          {paramSets.length > 0 ? <ParamSets paramSets={paramSets} onDelete={deleteParamSet} onRetrieve={renderParameterSet}/> :  "No parameter sets made."}
         </div>
         <div className="output">
-          {renderOutput()}
+          <h3>Outputs</h3>
+          <OutputList outputs={outputs}/>
         </div>
       </div>
     </div>

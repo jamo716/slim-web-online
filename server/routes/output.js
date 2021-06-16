@@ -8,13 +8,10 @@ import outputList from "../data/OutputList.js"
 
 const router = express.Router()
 
-//testing command prompt output
-router.get("/:id", (req, res) => {
+router.post("/:id", (req, res) => {
   const found = outputList.some((output) => output.id === parseInt(req.params.id))
   //the parameter set to compute with SLiM
   const paramSetToRun = paramSetList.filter((paramSet) => paramSet.id === parseInt(req.params.id))[0]
-
-  console.log(found)
 
   if(!found){
     //stores outputs from csv file for a single simulation run
@@ -53,6 +50,14 @@ router.get("/:id", (req, res) => {
     //have to use [0] index because the filter function returns an array of length 1 with the filtered item
     const cachedOutput = outputList.filter((item) => item.id === parseInt(req.params.id))[0]
     res.status(200).json(cachedOutput.output)
+  }
+})
+
+router.get("/", (req, res) => {
+  try{
+    res.status(200).json(outputList)
+  }catch{
+    res.status(404).json({message: error.message})
   }
 })
 
