@@ -28,11 +28,6 @@ body {
   font-family: inherit;
 }
 
-.btn-show {
-  margin-left: 50px;
-  margin-top: 20px;
-}
-
 .btn:focus {
   outline: none;
 }
@@ -51,6 +46,7 @@ body {
   margin: 30px auto;
   overflow: auto;
   min-height: 300px;
+  border: 1px solid steelblue;
   padding: 30px;
   border-radius: 5px;
 }
@@ -105,20 +101,6 @@ body {
   align-items: center;
   justify-content: space-between;
 }
-
-.output-element {
-  
-  margin: 5px;
-  padding: 10px 20px;
-  cursor: pointer;
-}
-
-.output-element h3 {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 
 .input-output {
   display: flex;

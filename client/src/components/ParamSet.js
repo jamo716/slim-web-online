@@ -4,12 +4,9 @@ Displays title of app and contains a button which opens and closes the menu for 
 Allows user to submit a parameter set to be rendered with submit button.
 */
 
-import { useState } from "react"
 import {FaTimes, FaArrowCircleRight} from "react-icons/fa"
 
 const ParamSet = (({paramSet, onDelete, onRetrieve}) => {
-    const [isRendering, setIsRendering] = useState(false)
-
     return(
         <div className="param-set">
             <h3>

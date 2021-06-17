@@ -7,7 +7,7 @@ const OutputList = (({outputs}) => {
         {outputs.map((output) => {
             return(
                 <Paper key={output.id} elevation={3}>
-                    <OutputElement  outputID={output.id}/>
+                <OutputElement  outputID={output.id}/>
                 </Paper>
             )
         })}

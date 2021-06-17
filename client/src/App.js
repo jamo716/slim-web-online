@@ -91,15 +91,14 @@ function App() {
 
   return (
     <div className="container">
-      <div className="header">
-        <Header onToggle={toggleParamMenu}/>
-      </div>
       <div className="input-output">
         <div className="input">
+          <Header onToggle={toggleParamMenu}/>
           {showParamMenu && <AddParamsMenu onAdd={addParamSet}/>}
           {paramSets.length > 0 ? <ParamSets paramSets={paramSets} onDelete={deleteParamSet} onRetrieve={renderParameterSet}/> :  "No parameter sets made."}
         </div>
         <div className="output">
+          <h3>Outputs</h3>
           <OutputList outputs={outputs}/>
         </div>
       </div>
