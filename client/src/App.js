@@ -5,9 +5,9 @@ import ParamSets from "./components/ParamSets"
 import AddParamsMenu from "./components/AddParamsMenu"
 import {useEffect} from "react"
 import "./App.css";
-import BasicTable from "./components/BasicTable"
 import CircularProgress from "@material-ui/core/CircularProgress"
 import OutputList from "./components/OutputList";
+import OutputChart from "./components/OutputChart";
 
 function App() {
 
@@ -17,14 +17,14 @@ function App() {
   //state variable for parameter sets
   const [paramSets, setParamSets] = React.useState([])
 
-  //state variable for front end sim output
-  const [output, setOutput] = React.useState(null)
-
   //state variable for list of outputs that have been rendered
   const [outputs, setOutputs] = React.useState([])
 
   //state variable for whether front end is rendering a simulation
   const [isRendering, setIsRendering] = React.useState(false)
+
+  //state variable for data being sent to graph
+  const [graphData, setGraphData] = React.useState()
 
   //fetch parameter sets when site first launches with useEffect() function
   useEffect(() => {
@@ -32,8 +32,8 @@ function App() {
         setParamSets(paramSets.data)
     })
 
-    axios.get("/output").then((outputs) => {
-      setOutputs(outputs.data)
+    axios.get("/output").then((serverOutputs) => {
+      setOutputs(serverOutputs.data)
     })
   }, [])
 
@@ -44,7 +44,7 @@ function App() {
 
     const newParamSet = {id, ...paramSet}
     axios.post("/paramSet", newParamSet)
-    setParamSets([...paramSets, newParamSet])  
+    setParamSets([...paramSets, newParamSet])
   }
 
   //toggles visibility of parameter menu
@@ -59,12 +59,14 @@ function App() {
     setParamSets(paramSets.filter((paramSet) => paramSet.id !== id))
   }
 
-  //receieves outputs from server and stores them in local state
-  const receiveOutput = () => {
-    axios.get(`/output/`).then((outputToShow) => {
-      //going to have to do something with this data
-      setOutputs(outputToShow.data)
-    })
+
+  async function receiveOutput() {
+    try {
+      const response = await axios.get('/output/');
+      setOutputs(response.data)
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   //submits a parameter set to be rendered as output on server
@@ -78,20 +80,12 @@ function App() {
     setIsRendering(false)
   }
 
-  //decides what the output section of page should display depending on if data is available or not
-  const renderOutput = () => {
-    if(output === null){
-      return(
-        <h1>Simulation Output</h1>
-      )
-    }else if(output.length === 0){
-      return(
-        <CircularProgress/>
-      )
-    }else{
-      return(
-        <BasicTable output={output}/>
-      )
+  const renderGraph = async (id) => {
+    try{
+      const response = await axios.get(`/output/${id}`)
+      setGraphData(response.data[0])
+    } catch(error) {
+      console.log(error)
     }
   }
 
@@ -105,8 +99,10 @@ function App() {
         </div>
         <div className="output">
           <h3>Outputs</h3>
-          <OutputList outputs={outputs}/>
+          <OutputList outputs={outputs} onGraph={renderGraph}/>
           {isRendering ? <CircularProgress/> : null}
+          {graphData && <OutputChart graphData={graphData}/>}
+          
         </div>
       </div>
     </div>

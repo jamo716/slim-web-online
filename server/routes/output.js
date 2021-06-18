@@ -53,6 +53,27 @@ const router = express.Router()
 //   }
 // })
 
+//get request for entire list of outputs
+router.get("/", (req, res) => {
+  try{
+    res.status(200).json(outputList)
+  }catch{
+    res.status(404).json({message: error.message})
+  }
+})
+
+//get request for a single output
+router.get("/:id", (req, res) => {
+  const found = outputList.some((output) => output.id === parseInt(req.params.id))
+     if(found){
+       res.json(outputList.filter((output) => output.id === parseInt(req.params.id)))
+     }else{
+       res.status(400).json({msg: "No parameter set with that id."})
+     }
+})
+
+
+//post request new rendered output
 router.post("/:id", (req, res) => {
   const found = outputList.some((output) => output.id === parseInt(req.params.id))
   //the parameter set to compute with SLiM
@@ -77,8 +98,8 @@ router.post("/:id", (req, res) => {
       .on("data", (data) => {
         const generationOutput = 
         {
-          generation: data[0],
-          mutCount: data[1]
+          generation: parseInt(data[0]),
+          mutCount: parseInt(data[1])
         }
         fileOutputs.push(generationOutput)
       })
@@ -100,14 +121,6 @@ router.post("/:id", (req, res) => {
     //have to use [0] index because the filter function returns an array of length 1 with the filtered item
     const cachedOutput = outputList.filter((item) => item.id === parseInt(req.params.id))[0]
     res.status(200).json(cachedOutput.output)
-  }
-})
-
-router.get("/", (req, res) => {
-  try{
-    res.status(200).json(outputList)
-  }catch{
-    res.status(404).json({message: error.message})
   }
 })
 
