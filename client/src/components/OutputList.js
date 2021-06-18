@@ -7,12 +7,14 @@ const OutputList = (({outputs}) => {
         {outputs.map((output) => {
             return(
                 <Paper key={output.id} elevation={3}>
-                <OutputElement  outputID={output.id}/>
+                    <OutputElement output={output}/>
                 </Paper>
             )
         })}
         </> 
     )
 })
+
+//<OutputElement outputID={output.id}/>
 
 export default OutputList

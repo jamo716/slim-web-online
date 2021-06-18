@@ -87,6 +87,7 @@ router.post("/:id", (req, res) => {
         //format for new output object that goes into the server outputList cache of output objects with an id
         const newOutput = {
           id: parseInt(req.params.id),
+          title: paramSetToRun.title,
           output: fileOutputs
         }
         //pushing onto server cache of computed outputs

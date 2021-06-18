@@ -1,11 +1,11 @@
-const OutputElement = (({outputID}) => {
+const OutputElement = (({output}) => {
     return(
         <div className="output-element">
             <h3>
-                Output Card
+                {output.title}
             </h3>
             <p>
-                {outputID}
+                {output.id}
             </p>
         </div>
     )

@@ -102,6 +102,19 @@ body {
   justify-content: space-between;
 }
 
+.output-element {
+  
+  margin: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.output-element h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .input-output {
   display: flex;
 }

@@ -23,6 +23,9 @@ function App() {
   //state variable for list of outputs that have been rendered
   const [outputs, setOutputs] = React.useState([])
 
+  //state variable for whether front end is rendering a simulation
+  const [isRendering, setIsRendering] = React.useState(false)
+
   //fetch parameter sets when site first launches with useEffect() function
   useEffect(() => {
     axios.get("/paramSet").then((paramSets) => {
@@ -66,10 +69,13 @@ function App() {
 
   //submits a parameter set to be rendered as output on server
   const renderParameterSet = async (id) => {
+    setIsRendering(true)
     //wait until the post finishes
     await axios.post(`/output/${id}`)
     //then update the front end with all computed outputs
+
     receiveOutput()
+    setIsRendering(false)
   }
 
   //decides what the output section of page should display depending on if data is available or not
@@ -100,6 +106,7 @@ function App() {
         <div className="output">
           <h3>Outputs</h3>
           <OutputList outputs={outputs}/>
+          {isRendering ? <CircularProgress/> : null}
         </div>
       </div>
     </div>

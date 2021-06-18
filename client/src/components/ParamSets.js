@@ -12,7 +12,7 @@ const ParamSets = (({paramSets, onDelete, onRetrieve}) => {
         {paramSets.map((paramSet) => {
             return(
                 <Paper key={paramSet.id} elevation={3}>
-                <ParamSet  paramSet={paramSet} onDelete={onDelete} onRetrieve={onRetrieve}/>
+                    <ParamSet  paramSet={paramSet} onDelete={onDelete} onRetrieve={onRetrieve}/>
                 </Paper>
             )
         })}
