@@ -102,7 +102,6 @@ function App() {
           <OutputList outputs={outputs} onGraph={renderGraph}/>
           {isRendering ? <CircularProgress/> : null}
           {graphData && <OutputChart graphData={graphData}/>}
-          
         </div>
       </div>
     </div>

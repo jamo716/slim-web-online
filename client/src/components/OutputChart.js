@@ -1,4 +1,4 @@
-import { LineChart, Line } from 'recharts'
+import { LineChart, Line, XAxis, YAxis, Tooltip, Legend } from 'recharts'
 
 const OutputChart = (({graphData}) => {
    
@@ -9,7 +9,11 @@ const OutputChart = (({graphData}) => {
 
     return(
         <LineChart width={400} height={400} data={data}>
-            <Line type="monotone" dataKey="mutCount" stroke="#8884d8" />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="mutCount" stroke="#8884d8" activeDot={{ r: 8 }} />
+            <XAxis dataKey="generation"/>
+            <YAxis dataKey="mutCount"/>
         </LineChart>
     )
 })
