@@ -8,7 +8,7 @@ import ShowButton from "./ShowButton"
 const Header = (({onToggle}) => {
     return(
         <header className="header">
-            <h1>SLiM Web</h1>
+            <h1>Neutral Simulation</h1>
             <ShowButton onToggle={onToggle}/>
         </header>
     )

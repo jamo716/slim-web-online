@@ -125,3 +125,19 @@ body {
 .icon {
   margin-left: 20px;
 }
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 10vh;
+  background: grey;
+}
+
+.nav-links {
+   width: 50%;
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+   list-style: none; 
+}
