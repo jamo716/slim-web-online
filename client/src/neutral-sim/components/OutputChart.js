@@ -1,20 +1,23 @@
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend } from 'recharts'
+import {useContext} from "react"
+import { NeutralSimContext } from '../context/NeutralSimContext'
 
-const OutputChart = (({graphData}) => {
+const OutputChart = (() => {
    
-    const data = graphData.output
-    //console.log(data)
-    
-    //const data = [{name: 'Page A', uv: 400, pv: 2400, amt: 2400}]
+    const {graphData} = useContext(NeutralSimContext)
 
     return(
-        <LineChart width={400} height={400} data={data}>
-            <Tooltip />
-            <Legend />
-            <Line type="monotone" dataKey="mutCount" stroke="#8884d8" activeDot={{ r: 8 }} />
-            <XAxis dataKey="generation"/>
-            <YAxis dataKey="mutCount"/>
-        </LineChart>
+        <div>
+            {graphData.length > 0 ? 
+                <LineChart width={400} height={400} data={graphData}>
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey="mutCount" stroke="#8884d8" activeDot={{ r: 8 }} />
+                    <XAxis dataKey="generation"/>
+                    <YAxis dataKey="mutCount"/>
+                </LineChart>
+            : null}
+        </div>
     )
 })
 

@@ -18,7 +18,7 @@ export const NeutralSimProvider = ({children}) => {
     const [isRendering, setIsRendering] = React.useState(false)
   
     //state variable for data being sent to graph
-    const [graphData, setGraphData] = React.useState()
+    const [graphData, setGraphData] = React.useState([])
 
     //one time initial get of parameter sets and outputs
     useEffect(() => {
@@ -78,12 +78,11 @@ export const NeutralSimProvider = ({children}) => {
       const renderGraph = async (id) => {
         try{
           const response = await axios.get(`/output/${id}`)
-          setGraphData(response.data[0])
+          setGraphData(response.data[0].output)
         } catch(error) {
           console.log(error)
         }
       }
-    
 
     return (
         <NeutralSimContext.Provider value={{
@@ -93,7 +92,11 @@ export const NeutralSimProvider = ({children}) => {
             isRendering,
             graphData,
             showParamMenu,
-            toggleParamMenu
+            toggleParamMenu,
+            addParamSet,
+            deleteParamSet,
+            renderParameterSet,
+            renderGraph
         }}>
             {children}
         </NeutralSimContext.Provider>

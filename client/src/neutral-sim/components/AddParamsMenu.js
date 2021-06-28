@@ -4,10 +4,10 @@ Allows user to input parameter values and then submit them to the paramSets glob
 */
 
 import {useState, useContext} from "react"
-import { NeutralSimContext, NeutralSimProvider } from "../context/NeutralSimContext"
+import { NeutralSimContext } from "../context/NeutralSimContext"
 
 const AddParamsMenu = (({onAdd}) => {
-    const {showParamMenu} = useContext(NeutralSimContext)
+    const {showParamMenu, addParamSet} = useContext(NeutralSimContext)
 
     const [title, setTitle] = useState("")
     const [mutRate, setMutRate] = useState(0)
@@ -19,7 +19,7 @@ const AddParamsMenu = (({onAdd}) => {
         if(!title || !mutRate || !popSize){
             alert("Please supply values to all parameters.")
         }else{
-            onAdd({title, mutRate, popSize})
+            addParamSet({title, mutRate, popSize})
 
             setTitle("")
             setMutRate(0)

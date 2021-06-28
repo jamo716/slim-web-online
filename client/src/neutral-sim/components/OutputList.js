@@ -1,7 +1,12 @@
+import {useContext} from "react"
 import Paper from "@material-ui/core/Paper"
 import OutputElement from "./OutputElement"
+import { NeutralSimContext } from "../context/NeutralSimContext"
 
-const OutputList = (({outputs, onGraph}) => {
+
+const OutputList = (({onGraph}) => {
+    const {outputs} = useContext(NeutralSimContext)
+
     return(
         <>
         {outputs.map((output) => {
