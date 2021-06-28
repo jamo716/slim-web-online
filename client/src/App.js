@@ -5,20 +5,21 @@ import Nav from "./components/Nav"
 import NavBar from "./components/NavBar"
 import NeutralSim from "./neutral-sim/NeutralSim";
 import About from "./about/About"
+import NavDrawer from "./components/NavDrawer";
 
 
 function App() {
 
   return (
     <Router>
-      <NavBar/>
       <div className="app">
-        <Switch>
-          <Route path="/neutralsim" component={NeutralSim}/>
-          <Route path="/about" component={About}/>
-        </Switch>
+        <NavDrawer>
+          <Switch>
+            <Route path="/neutralsim" component={NeutralSim}/>
+            <Route path="/about" component={About}/>
+          </Switch>
+        </NavDrawer>
       </div>
-
     </Router>
   );
 }
