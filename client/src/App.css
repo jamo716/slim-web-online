@@ -36,3 +36,147 @@
     transform: rotate(360deg);
   }
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.add-params-menu {
+  margin-bottom: 40px;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #d0e1e1;
+}
+
+.btn {
+  display: inline-block;
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 15px;
+  font-family: inherit;
+}
+
+.btn:focus {
+  outline: none;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 30px auto;
+  overflow: auto;
+  min-height: 300px;
+  padding: 30px;
+}
+
+.form-control {
+  margin: 20px 0;
+}
+
+.form-control label {
+  display: block;
+}
+
+.form-control input {
+  width: 100%;
+  height: 40px;
+  margin: 5px;
+  padding: 3px 7px;
+  font-size: 17px;
+}
+
+.form-control-check {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-control-check label {
+  flex: 1;
+}
+
+.form-control-check input {
+  flex: 2;
+  height: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.param-set {
+  
+  margin: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.param-set h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.output-element {
+  
+  margin: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.output-element h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.input-output {
+  display: flex;
+}
+
+.output {
+  margin-left: 10%;
+}
+
+.icon {
+  margin-left: 20px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 10vh;
+  background: grey;
+}
+
+.nav-links {
+   width: 50%;
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+   list-style: none; 
+}
