@@ -9,25 +9,32 @@ import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
 import ListItemIcon from "@material-ui/core/ListItemIcon"
 import ListItemText from "@material-ui/core/ListItemText"
+import AppBar from "@material-ui/core/AppBar"
+import ToolBar from "@material-ui/core/Toolbar"
 
 const DRAWER_WIDTH = 240
 
-const useStyles = makeStyles({
-    page: {
-        background: "#f9f9f9",
-        width: "100%"
-    },
-    drawer: {
-        width: DRAWER_WIDTH
-    },
-    drawerPaper: {
-        width: DRAWER_WIDTH
-    },
-    root: {
-        display: "flex"
-    },
-    active: {
-        background: "#f4f4f4"
+const useStyles = makeStyles((theme) => {
+    return {
+        appbar: {
+            width: `calc(100% - ${DRAWER_WIDTH}px)`
+        },
+        drawer: {
+            width: DRAWER_WIDTH
+        },
+        drawerPaper: {
+            width: DRAWER_WIDTH
+        },
+        root: {
+            display: "flex"
+        },
+        active: {
+            background: "#f4f4f4"
+        },
+        title: {
+            padding: theme.spacing(2)
+        },
+        toolbar: theme.mixins.toolbar
     }
 })
 
@@ -52,11 +59,20 @@ export const NavDrawer = ({children}) => {
 
     return (
         <div className={classes.root}>
+            {/* app bar */}
+            <AppBar className={classes.appbar} elevation={1}>
+                <ToolBar>
+                    <Typography>
+                        SLiM Web
+                    </Typography>
+                </ToolBar>
+            </AppBar>
+
             {/* side navigation drawer */}
             <Drawer className={classes.drawer} variant="permanent" anchor="left" classes={{paper: classes.drawerPaper}}>
                 <div>
-                    <Typography variant="h5">
-                        SLiM Web
+                    <Typography variant="h6" className={classes.title}>
+                        Navigation
                     </Typography>
                 </div>
                 {/* list of links to pages on site */}
@@ -72,6 +88,7 @@ export const NavDrawer = ({children}) => {
             </Drawer>
 
             <div>
+                <div className={classes.toolbar}></div>
                 {children}
             </div>
         </div>

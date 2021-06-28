@@ -1,8 +1,6 @@
 import React from "react";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
 import "./App.css";
-import Nav from "./components/Nav"
-import NavBar from "./components/NavBar"
 import NeutralSim from "./neutral-sim/NeutralSim";
 import About from "./about/About"
 import NavDrawer from "./components/NavDrawer";
