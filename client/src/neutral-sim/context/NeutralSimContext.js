@@ -1,5 +1,5 @@
 
-import React, { createContext, useState, useEffect } from 'react'
+import React, { createContext, useEffect } from 'react'
 import axios from "axios"
 
 export const NeutralSimContext = createContext()
@@ -91,7 +91,6 @@ export const NeutralSimProvider = ({children}) => {
             outputs, 
             isRendering,
             graphData,
-            showParamMenu,
             toggleParamMenu,
             addParamSet,
             deleteParamSet,

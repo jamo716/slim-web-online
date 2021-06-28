@@ -1,7 +1,5 @@
 //this is the page for the default neutral script that was used for the proof of concept
-
 import React from "react"
-import axios from "axios"
 import Header from "./components/Header"
 import ParamSets from "./components/ParamSets"
 import AddParamsMenu from "./components/AddParamsMenu"
