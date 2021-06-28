@@ -5,11 +5,11 @@ Displays title of app and contains a button which opens and closes the menu for 
 
 import ShowButton from "./ShowButton"
 
-const Header = (({onToggle}) => {
+const Header = (() => {
     return(
         <header className="header">
             <h1>Neutral Simulation</h1>
-            <ShowButton onToggle={onToggle}/>
+            <ShowButton/>
         </header>
     )
 })

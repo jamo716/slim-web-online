@@ -5,15 +5,13 @@ import axios from "axios"
 import Header from "./components/Header"
 import ParamSets from "./components/ParamSets"
 import AddParamsMenu from "./components/AddParamsMenu"
-import {useEffect} from "react"
+import {useEffect, useContext} from "react"
 import CircularProgress from "@material-ui/core/CircularProgress"
 import OutputList from "./components/OutputList";
 import OutputChart from "./components/OutputChart";
+import {NeutralSimProvider} from "./context/NeutralSimContext"
 
 function NeutralSim() {
-
-    //state variable for whether or not to show the parameter menu
-    const[showParamMenu, setShowParamMenu] = React.useState(true)
   
     //state variable for parameter sets
     const [paramSets, setParamSets] = React.useState([])
@@ -29,6 +27,7 @@ function NeutralSim() {
   
     //fetch parameter sets when site first launches with useEffect() function
     useEffect(() => {
+
       axios.get("/paramSet").then((paramSets) => {
           setParamSets(paramSets.data)
       })
@@ -46,11 +45,6 @@ function NeutralSim() {
       const newParamSet = {id, ...paramSet}
       axios.post("/paramSet", newParamSet)
       setParamSets([...paramSets, newParamSet])
-    }
-  
-    //toggles visibility of parameter menu
-    const toggleParamMenu = () => {
-      setShowParamMenu(!showParamMenu)
     }
   
     //deletes a parameter set
@@ -91,21 +85,23 @@ function NeutralSim() {
     }
   
     return (
-      <div className="container">
-        <div className="input-output">
-          <div className="input">
-            <Header onToggle={toggleParamMenu}/>
-            {showParamMenu && <AddParamsMenu onAdd={addParamSet}/>}
-            {paramSets.length > 0 ? <ParamSets paramSets={paramSets} onDelete={deleteParamSet} onRetrieve={renderParameterSet}/> :  "No parameter sets made."}
-          </div>
-          <div className="output">
-            <h3>Outputs</h3>
-            <OutputList outputs={outputs} onGraph={renderGraph}/>
-            {isRendering ? <CircularProgress/> : null}
-            {graphData && <OutputChart graphData={graphData}/>}
+      <NeutralSimProvider>
+        <div className="container">
+          <div className="input-output">
+            <div className="input">
+              <Header/>
+              <AddParamsMenu onAdd={addParamSet}/>
+              {paramSets.length > 0 ? <ParamSets paramSets={paramSets} onDelete={deleteParamSet} onRetrieve={renderParameterSet}/> :  "No parameter sets made."}
+            </div>
+            <div className="output">
+              <h3>Outputs</h3>
+              <OutputList outputs={outputs} onGraph={renderGraph}/>
+              {isRendering ? <CircularProgress/> : null}
+              {graphData && <OutputChart graphData={graphData}/>}
+            </div>
           </div>
         </div>
-      </div>
+      </NeutralSimProvider>
     );
   }
   export default NeutralSim;
