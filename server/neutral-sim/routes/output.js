@@ -2,7 +2,7 @@ import express from "express"
 import fs from "fs"
 import csv from "fast-csv"
 import paramSetList from "../data/ParamSetsList.js"
-import {execSync, spawn} from "child_process"
+import {spawn} from "child_process"
 import outputList from "../data/OutputList.js"
 
 
@@ -39,7 +39,7 @@ router.post("/:id", (req, res) => {
 
     const paramSetToRun = paramSetList.filter((paramSet) => paramSet.id === parseInt(req.params.id))[0]
 
-    const child = spawn("slim", ["-d", `mutRate=${paramSetToRun.mutRate}`, "-d", `popSize=${paramSetToRun.popSize}`, "-d", `id=${parseInt(req.params.id)}`, "server/slim-scripts/test.slim"])
+    const child = spawn("slim", ["-d", `mutRate=${paramSetToRun.mutRate}`, "-d", `popSize=${paramSetToRun.popSize}`, "-d", `id=${parseInt(req.params.id)}`, "server/neutral-sim/slim-scripts/test.slim"])
 
     child.on("exit", (code, signal) => {
       if(code){
@@ -48,7 +48,7 @@ router.post("/:id", (req, res) => {
       if(signal){
           //console.log(signal)
       }
-      fs.createReadStream(`server/slim-output/${parseInt(req.params.id)}/test.csv`)
+      fs.createReadStream(`server/neutral-sim/slim-output/${parseInt(req.params.id)}/test.csv`)
       .pipe(csv.parse({}))
       .on("data", (data) => {
         const generationOutput = 
