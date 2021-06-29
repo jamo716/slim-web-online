@@ -20,7 +20,6 @@ function NeutralSim() {
               <ParamSets/>
             </div>
             <div className="output">
-              <h3>Outputs</h3>
               <OutputList/>
               <LoadingCircle/>
               <OutputChart/>

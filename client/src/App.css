@@ -78,7 +78,7 @@ body {
 }
 
 .container {
-  max-width: 1000px;
+  max-width: 100%;
   margin: 30px auto;
   overflow: auto;
   min-height: 300px;
@@ -153,8 +153,14 @@ body {
   display: flex;
 }
 
+.input {
+  width: 500px;
+}
+
 .output {
   margin-left: 10%;
+  display: flex;
+  width: 1000px;
 }
 
 .icon {
