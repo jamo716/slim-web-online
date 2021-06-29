@@ -9,7 +9,7 @@ import Typography from "@material-ui/core/Typography"
 const Header = (() => {
     return(
         <header className="header">
-            <Typography variant="h4">Neutral Simulation</Typography>
+            <Typography variant="h5">Neutral Simulation</Typography>
             <ShowButton/>
         </header>
     )
