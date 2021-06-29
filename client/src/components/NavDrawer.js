@@ -11,6 +11,8 @@ import ListItemIcon from "@material-ui/core/ListItemIcon"
 import ListItemText from "@material-ui/core/ListItemText"
 import AppBar from "@material-ui/core/AppBar"
 import ToolBar from "@material-ui/core/Toolbar"
+import Avatar from "@material-ui/core/Avatar"
+import SlimIcon from "./media/SLiM_256.jpeg"
 
 const DRAWER_WIDTH = 240
 
@@ -36,7 +38,10 @@ const useStyles = makeStyles((theme) => {
         title: {
             padding: theme.spacing(2)
         },
-        toolbar: theme.mixins.toolbar
+        toolbar: theme.mixins.toolbar,
+        icon: {
+            marginRight: 20
+        }
     }
 })
 
@@ -64,6 +69,7 @@ export const NavDrawer = ({children}) => {
             {/* app bar */}
             <AppBar className={classes.appbar} elevation={1}>
                 <ToolBar>
+                    <Avatar alt="SLiM Icon" src={SlimIcon} variant="square" className={classes.icon}/>
                     <Typography>
                         SLiM Web
                     </Typography>
