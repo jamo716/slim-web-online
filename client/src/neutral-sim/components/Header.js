@@ -4,11 +4,12 @@ Displays title of app and contains a button which opens and closes the menu for 
 */
 
 import ShowButton from "./ShowButton"
+import Typography from "@material-ui/core/Typography"
 
 const Header = (() => {
     return(
         <header className="header">
-            <h1>Neutral Simulation</h1>
+            <Typography variant="h4">Neutral Simulation</Typography>
             <ShowButton/>
         </header>
     )

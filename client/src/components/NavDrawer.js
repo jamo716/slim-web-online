@@ -20,10 +20,12 @@ const useStyles = makeStyles((theme) => {
             width: `calc(100% - ${DRAWER_WIDTH}px)`
         },
         drawer: {
-            width: DRAWER_WIDTH
+            width: DRAWER_WIDTH,
+            
         },
         drawerPaper: {
-            width: DRAWER_WIDTH
+            width: DRAWER_WIDTH,
+            backgroundColor: "lightgrey"
         },
         root: {
             display: "flex"

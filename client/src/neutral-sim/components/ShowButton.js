@@ -4,6 +4,7 @@ The button component that hides/shows the parameter set entry menu.
 
 import { useContext } from "react"
 import { NeutralSimContext } from "../context/NeutralSimContext"
+import Button from "@material-ui/core/Button"
 
 const ShowButton = (() => {
 
@@ -11,7 +12,7 @@ const ShowButton = (() => {
 
     return(
         <header className="header">
-            <button className="btn" onClick={() => toggleParamMenu()}>Toggle Parameters Menu</button>
+            <Button color="primary" variant="contained" size="small" onClick={() => toggleParamMenu()}>Toggle Menu</Button>
         </header>
     )
 })
