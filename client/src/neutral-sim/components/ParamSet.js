@@ -28,20 +28,6 @@ const ParamSet = (({paramSet}) => {
     const classes = useStyles()
 
     return(
-        // <div className="param-set">
-        //     <h3>
-        //         {paramSet.title}
-        //             <div>
-        //                 <FaTimes style={{color: "red", cursor: "pointer"}} onClick={() => deleteParamSet(paramSet.id)}/>
-        //                 <FaArrowCircleRight style={{color: "green", cursor: "pointer"}} onClick={() => renderParameterSet(paramSet.id)}/>
-        //             </div>
-        //     </h3>
-        //     <p>
-        //         {paramSet.stabSelection}
-        //         {paramSet.popSize}
-        //     </p>
-        // </div>
-
         <Container>
             <Card className={classes.root}>
                 <CardHeader 

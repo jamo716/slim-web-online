@@ -9,7 +9,7 @@ import { NeutralSimContext } from "../context/NeutralSimContext"
 import Container from "@material-ui/core/Container"
 import Grid from "@material-ui/core/Container"
 
-const ParamSets = (({onRetrieve}) => {
+const ParamSets = (() => {
     const {paramSets} = useContext(NeutralSimContext)
 
     return(
