@@ -58,6 +58,11 @@ export const NavDrawer = ({children}) => {
             path: "/neutralsim"
         },
         {
+            text: "Assortative Mating",
+            icon: <ComputerIcon color="primary"/>,
+            path: "/assortativemating"
+        },
+        {
             text: "About",
             icon: <InfoIcon color="primary"/>,
             path: "/about"

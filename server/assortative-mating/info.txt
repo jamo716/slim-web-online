@@ -1,0 +1,13 @@
+Description: Simulates a population that mates assortatively for some phenotypic trait. 
+            The phenotypic trait is determined by k diploid QTL loci with allelic effects
+            of either +1 or -1. Simulation runs for 200 generations. 
+
+Outputs: Phenotypic values of 50 randomly sampled individuals every 10 generations to be used in histograms. 
+
+Inputs: 
+    Population size:
+                Low (500), medium (750), high (1000)
+    Strength of assortative mating:
+                Low (0.05), medium (0.25), high (0.5)
+    Number of QTL (k):
+                Low (5), medium (10), high (15)

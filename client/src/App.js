@@ -2,6 +2,7 @@ import React from "react";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
 import "./App.css";
 import NeutralSim from "./neutral-sim/NeutralSim";
+import AssortativeMating from "./assortative-mating/AssortativeMating";
 import About from "./about/About"
 import NavDrawer from "./components/NavDrawer";
 
@@ -14,6 +15,7 @@ function App() {
         <NavDrawer>
           <Switch>
             <Route path="/neutralsim" component={NeutralSim}/>
+            <Route path="/assortativemating" component={AssortativeMating}/>
             <Route path="/about" component={About}/>
           </Switch>
         </NavDrawer>
