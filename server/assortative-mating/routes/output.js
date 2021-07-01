@@ -52,7 +52,7 @@ router.post("/:id", (req, res) => {
           const generationOutput = 
           {
             generation: parseInt(data[0]),
-            phenotypes: data.slice(1)
+            phenotypes: data.slice(1).map(element => parseInt(element))
           }
           fileOutputs.push(generationOutput)
         })

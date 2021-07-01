@@ -25,7 +25,7 @@ export const AssortativeMatingProvider = ({children}) => {
             setParamSets(paramSets.data)
         })
     
-        axios.get("/output").then((serverOutputs) => {
+        axios.get("/api/assortativemating/output").then((serverOutputs) => {
           setOutputs(serverOutputs.data)
         })
     }, [])
@@ -73,6 +73,15 @@ export const AssortativeMatingProvider = ({children}) => {
         setIsRendering(false)
       }
 
+      const renderGraph = async (id) => {
+        try{
+          const response = await axios.get(`/api/assortativemating/output/${id}`)
+          setGraphData(response.data[0].output)
+        } catch(error) {
+          console.log(error)
+        }
+      }
+
     return(
         <AssortativeMatingContext.Provider value={{
             showParamMenu, 
@@ -84,6 +93,7 @@ export const AssortativeMatingProvider = ({children}) => {
             addParamSet,
             deleteParamSet,
             renderParameterSet,
+            renderGraph
         }}>
             {children}
         </AssortativeMatingContext.Provider>

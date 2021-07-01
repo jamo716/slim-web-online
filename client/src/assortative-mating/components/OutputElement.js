@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { NeutralSimContext } from "../context/NeutralSimContext"
+import { AssortativeMatingContext } from "../context/AssortativeMatingContext"
 import Container from "@material-ui/core/Container"
 import Card from "@material-ui/core/Card"
 import CardHeader from "@material-ui/core/CardHeader"
@@ -15,7 +15,7 @@ const useStyles = makeStyles({
 })
 
 const OutputElement = (({output}) => {
-    const {renderGraph} = useContext(NeutralSimContext)
+    const {renderGraph} = useContext(AssortativeMatingContext)
     const classes = useStyles()
 
     return(

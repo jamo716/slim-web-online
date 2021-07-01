@@ -44,6 +44,13 @@ fitness(m2){
 			}
 		}
 	}
+
+	add_effects = inds.sumOfMutationsOfType(m2);
+	phenotype = add_effects;
+	inds.tagF = phenotype;
+	indsSample = sample(inds, 50);
+	info = paste(c(sim.generation, indsSample.tagF), sep=",");
+	writeFile("output.csv", info, append = F);
 }
 
 1: late(){
@@ -52,7 +59,7 @@ fitness(m2){
 	phenotype = add_effects;
 	inds.tagF = phenotype;	
 	
-	if(sim.generation % 10 == 0 | sim.generation == 1){
+	if(sim.generation % 10 == 0){
 		indsSample = sample(inds, 50);
 		info = paste(c(sim.generation, indsSample.tagF), sep=",");
 		writeFile("output.csv", info, append = T);
