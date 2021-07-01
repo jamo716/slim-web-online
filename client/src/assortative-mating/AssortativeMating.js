@@ -2,6 +2,7 @@ import React from 'react'
 import {AssortativeMatingProvider} from './context/AssortativeMatingContext'
 import Header from "./components/Header"
 import AddParamsMenu from './components/AddParamsMenu'
+import Paramsets from './components/Paramsets'
 
 const AssortativeMating = () => {
     return (
@@ -10,6 +11,7 @@ const AssortativeMating = () => {
                 <div className="input">
                     <Header/>
                     <AddParamsMenu/>
+                    <Paramsets/>
                 </div>
                 <div className="output">
 
