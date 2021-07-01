@@ -1,9 +1,9 @@
 import React, { createContext, useEffect } from 'react'
 import axios from "axios"
 
-export const NeutralSimContext = createContext()
+export const AssortativeMatingContext = createContext()
 
-export const NeutralSimProvider = ({children}) => {
+export const AssortativeMatingProvider = ({children}) => {
     //state variable for whether or not to show the parameter menu
     const[showParamMenu, setShowParamMenu] = React.useState(true)
   
@@ -21,15 +21,14 @@ export const NeutralSimProvider = ({children}) => {
 
     //one time initial get of parameter sets and outputs
     useEffect(() => {
-
-        axios.get("/paramSet").then((paramSets) => {
+        axios.get("/api/assortativemating/paramset").then((paramSets) => {
             setParamSets(paramSets.data)
         })
     
         axios.get("/output").then((serverOutputs) => {
           setOutputs(serverOutputs.data)
         })
-      }, [])
+    }, [])
 
     //toggles visibility of parameter menu
     const toggleParamMenu = () => {
@@ -42,21 +41,21 @@ export const NeutralSimProvider = ({children}) => {
         const id = Math.floor(Math.random() * 10000 + 1)
     
         const newParamSet = {id, ...paramSet}
-        axios.post("/paramSet", newParamSet)
+        axios.post("/api/assortativemating/paramset", newParamSet)
         setParamSets([...paramSets, newParamSet])
-      }
+    }
     
-      //deletes a parameter set
-      const deleteParamSet = (id) => {
-        axios.delete(`/paramSet/${id}`)
+    //deletes a parameter set
+    const deleteParamSet = (id) => {
+        axios.delete(`/api/assortativemating/paramset/${id}`)
     
         setParamSets(paramSets.filter((paramSet) => paramSet.id !== id))
-      }
-    
+    }
+
     //get all outputs froms server
-      async function receiveOutput() {
+    async function receiveOutput() {
         try {
-          const response = await axios.get('/output/');
+          const response = await axios.get('/api/assortativemating/output');
           setOutputs(response.data)
         } catch (error) {
           console.error(error);
@@ -67,24 +66,15 @@ export const NeutralSimProvider = ({children}) => {
       const renderParameterSet = async (id) => {
         setIsRendering(true)
         //wait until the post finishes
-        await axios.post(`/output/${id}`)
+        await axios.post(`/api/assortativemating/output/${id}`)
         //then update the front end with all computed outputs
     
         receiveOutput()
         setIsRendering(false)
       }
-    
-      const renderGraph = async (id) => {
-        try{
-          const response = await axios.get(`/output/${id}`)
-          setGraphData(response.data[0].output)
-        } catch(error) {
-          console.log(error)
-        }
-      }
 
-    return (
-        <NeutralSimContext.Provider value={{
+    return(
+        <AssortativeMatingContext.Provider value={{
             showParamMenu, 
             paramSets,
             outputs, 
@@ -94,10 +84,9 @@ export const NeutralSimProvider = ({children}) => {
             addParamSet,
             deleteParamSet,
             renderParameterSet,
-            renderGraph
         }}>
             {children}
-        </NeutralSimContext.Provider>
+        </AssortativeMatingContext.Provider>
     )
-
 }
+
