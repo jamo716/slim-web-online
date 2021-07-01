@@ -1,5 +1,5 @@
 //Holds parameter sets and responds to frontend with JSON objects containing their details
-var paramSetList = [
+const paramSetList = [
     {
       id: 1,
       title: "Neutral Simulation",

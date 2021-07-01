@@ -9,7 +9,7 @@ initialize() {
 	
 	//neutral and QTL arise at same freq
 	initializeGenomicElementType("g1", m2, 1);
-	initializeGenomicElement(g1, 0, 19);
+	initializeGenomicElement(g1, 0, (nQTL-1));
 	initializeRecombinationRate(0.5);
 }
 
@@ -19,14 +19,23 @@ fitness(m2){
 
 //starting mutations assigned
 1 late(){
-	sim.addSubpop("p1", 1000);
+	//make a directory to store output that is named with the id	
+	createDirectory(paste("/Users/jameson/Documents/slim-web-online/server/assortative-mating/slim-output/" + asString(id)));
+
+	//path to read
+	path = paste("/Users/jameson/Documents/slim-web-online/server/assortative-mating/slim-output/" + asString(id));
+
+	//set working directory equal to that path
+	setwd(path);
+
+	sim.addSubpop("p1", popSize);
 	
 	inds = p1.individuals;
 	
 	//mutation assignment
 	g = sim.subpopulations.genomes;
 	
-	for (q in 0:19){
+	for (q in 0:(nQTL-1)){
 		for(genome in g){
 			if(rbinom(1, 1, 0.5) == 1){
 				genome.addNewMutation(m2, 1.0, q);
@@ -46,19 +55,19 @@ fitness(m2){
 	if(sim.generation % 10 == 0 | sim.generation == 1){
 		indsSample = sample(inds, 50);
 		info = paste(c(sim.generation, indsSample.tagF), sep=",");
-		writeFile("~/Desktop/output.csv", info, append = T);
+		writeFile("output.csv", info, append = T);
 	}
 }
 
 //assortative mating
-100: mateChoice() {
+10: mateChoice() {
 	phenotype = individual.tagF;
 	others = sourceSubpop.individuals.tagF;
 	
-	return dnorm(others, phenotype, 0.000000001);
+	return dnorm(others, phenotype, assortStr);
 }
 
-10000 late(){
+200 late(){
 	sim.simulationFinished();
 }
 

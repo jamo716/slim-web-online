@@ -31,12 +31,12 @@ router.get("/:id", (req, res) => {
 //post request new rendered output
 router.post("/:id", (req, res) => {
   const found = outputList.some((output) => output.id === parseInt(req.params.id))
-  //the parameter set to compute with SLiM
 
   if(!found){
     //stores outputs from csv file for a single simulation run
     const fileOutputs = []
 
+    //first index referenced because the API returns an array of length one
     const paramSetToRun = paramSetList.filter((paramSet) => paramSet.id === parseInt(req.params.id))[0]
 
     const child = spawn("slim", ["-d", `mutRate=${paramSetToRun.mutRate}`, "-d", `popSize=${paramSetToRun.popSize}`, "-d", `id=${parseInt(req.params.id)}`, "server/neutral-sim/slim-scripts/test.slim"])
