@@ -7,6 +7,7 @@ import CardActions from '@material-ui/core/CardActions'
 import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
 import { makeStyles } from "@material-ui/core"
+import CsvDownloader from "react-csv-downloader"
 
 const useStyles = makeStyles({
     root: {
@@ -17,6 +18,16 @@ const useStyles = makeStyles({
 const OutputElement = (({output}) => {
     const {renderGraph} = useContext(NeutralSimContext)
     const classes = useStyles()
+
+    const columns = [{
+        id: 'generation',
+        displayName: 'Generation'
+      }, {
+        id: 'mutCount',
+        displayName: 'Count of Mutations'
+      }];
+
+    const datas = output.output
 
     return(
         <Container>
@@ -32,6 +43,16 @@ const OutputElement = (({output}) => {
                 <Button size="small" color="primary" onClick={() => renderGraph(output.id)}>
                     Graph Output
                 </Button>
+                <CsvDownloader
+                    filename={`output_${output.id}`}
+                    extension=".csv"
+                    separator=";"
+                    wrapColumnChar="'"
+                    columns={columns}
+                    datas={datas}
+                >
+                    <Button>Download</Button>
+                </CsvDownloader>
                 </CardActions>
             </Card>
         </Container>

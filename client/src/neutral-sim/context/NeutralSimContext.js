@@ -29,7 +29,7 @@ export const NeutralSimProvider = ({children}) => {
         axios.get("/output").then((serverOutputs) => {
           setOutputs(serverOutputs.data)
         })
-      }, [])
+    }, [])
 
     //toggles visibility of parameter menu
     const toggleParamMenu = () => {
@@ -44,44 +44,46 @@ export const NeutralSimProvider = ({children}) => {
         const newParamSet = {id, ...paramSet}
         axios.post("/paramSet", newParamSet)
         setParamSets([...paramSets, newParamSet])
-      }
+    }
     
-      //deletes a parameter set
-      const deleteParamSet = (id) => {
-        axios.delete(`/paramSet/${id}`)
-    
-        setParamSets(paramSets.filter((paramSet) => paramSet.id !== id))
-      }
+    //deletes a parameter set
+    const deleteParamSet = (id) => {
+      axios.delete(`/paramSet/${id}`)
+  
+      setParamSets(paramSets.filter((paramSet) => paramSet.id !== id))
+    }
     
     //get all outputs froms server
-      async function receiveOutput() {
-        try {
-          const response = await axios.get('/output/');
-          setOutputs(response.data)
-        } catch (error) {
-          console.error(error);
-        }
+    async function receiveOutput() {
+      try {
+        const response = await axios.get('/output/');
+        setOutputs(response.data)
+      } catch (error) {
+        console.error(error);
       }
+    }
+  
+    //submits a parameter set to be rendered as output on server
+    const renderParameterSet = async (id) => {
+      setIsRendering(true)
+      //wait until the post finishes
+      await axios.post(`/output/${id}`)
+      //then update the front end with all computed outputs
+  
+      receiveOutput()
+      setIsRendering(false)
+    }
     
-      //submits a parameter set to be rendered as output on server
-      const renderParameterSet = async (id) => {
-        setIsRendering(true)
-        //wait until the post finishes
-        await axios.post(`/output/${id}`)
-        //then update the front end with all computed outputs
-    
-        receiveOutput()
-        setIsRendering(false)
+    const renderGraph = async (id) => {
+      try{
+        const response = await axios.get(`/output/${id}`)
+        setGraphData(response.data[0].output)
+      } catch(error) {
+        console.log(error)
       }
+    }
+
     
-      const renderGraph = async (id) => {
-        try{
-          const response = await axios.get(`/output/${id}`)
-          setGraphData(response.data[0].output)
-        } catch(error) {
-          console.log(error)
-        }
-      }
 
     return (
         <NeutralSimContext.Provider value={{
