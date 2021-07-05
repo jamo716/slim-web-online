@@ -45,7 +45,7 @@ const OutputElement = (({output}) => {
                     Graph Output
                 </Button>
                 <CsvDownloader
-                    filename={`output_${output.id}`}
+                    filename={`neutral_output_${output.id}`}
                     extension=".csv"
                     separator=";"
                     wrapColumnChar="'"
