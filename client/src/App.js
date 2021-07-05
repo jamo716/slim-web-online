@@ -11,8 +11,8 @@ import Cookies from "js-cookie"
 function App() {
 
   useEffect(() => {
-    if(!Cookies.get("user_id")){
-      Cookies.set("user_id", Math.floor(Math.random() * 100000 + 1))
+    if(!Cookies.get("userID")){
+      Cookies.set("userID", Math.floor(Math.random() * 100000 + 1))
     }
   }, [])
 

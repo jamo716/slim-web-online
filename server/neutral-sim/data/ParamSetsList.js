@@ -1,17 +1,16 @@
 //Holds parameter sets and responds to frontend with JSON objects containing their details
 const paramSetList = [
-    {
-      id: 1,
-      title: "Neutral Simulation",
-      mutRate: 0,
-      popSize: 1000,
-    },
-    {
-      id: 2,
-      title: "Neutral Simulation Bigger Population",
-      mutRate: 0,
-      popSize: 2500,
-    }
+    
   ]
+
+// example format of parameter set objects
+
+// {
+//   id: 1,
+//   userID: 150
+//   title: "Neutral Simulation",
+//   mutRate: 0,
+//   popSize: 1000,
+// }
 
   export default paramSetList

@@ -9,8 +9,6 @@ router.use(cookieParser())
 
 //responds with full parameter set list
 router.get("/", (req, res) => {
-  console.log(req.cookies)
-
     try {
         res.status(200).json(paramSetList)
     } catch (error) {
@@ -18,7 +16,7 @@ router.get("/", (req, res) => {
     }
   });
   
-  //responds with single parametere list specified by id'
+  //responds with single parameter list specified by id'
    router.get("/:id", (req, res) => {
      const found = paramSetList.some((paramSet) => paramSet.id === parseInt(req.params.id))
     
@@ -33,6 +31,7 @@ router.get("/", (req, res) => {
   router.post("/", (req, res) => {
     const newParamSet = {
       id: req.body.id,
+      userID: parseInt(req.cookies.userID),
       title: req.body.title,
       mutRate: parseFloat(req.body.mutRate),
       popSize: parseInt(req.body.popSize)
