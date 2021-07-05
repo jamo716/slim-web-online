@@ -4,21 +4,36 @@ import csv from "fast-csv"
 import paramSetList from "../data/ParamSetsList.js"
 import {spawn} from "child_process"
 import outputList from "../data/OutputList.js"
-
+import cookieParser from "cookie-parser"
 
 const router = express.Router()
 
+//cookie parser middleware that returns an object containing cookie data by key accessed by req.cookies
+router.use(cookieParser())
+
 //get request for entire list of outputs
-router.get("/", (req, res) => {
+router.get("/:userid", (req, res) => {
   try{
-    res.status(200).json(outputList)
+    const userOutputs = outputList.filter((output) => output.userID === parseInt(req.params.userid))
+    res.status(200).json(userOutputs)
   }catch{
     res.status(404).json({message: error.message})
   }
 })
 
 //get request for a single output
-router.get("/:id", (req, res) => {
+router.get("/:userid/:id", (req, res) => {
+  try {
+    const userOutputs = outputList.filter((output) => output.userID === parseInt(req.params.userid))
+    res.json(userOutputs.filter((output) => output.id === parseInt(req.params.id)))
+
+  } catch (error) {
+    res.status(404).json({message: error.message})
+  }
+
+
+
+
   const found = outputList.some((output) => output.id === parseInt(req.params.id))
      if(found){
        res.json(outputList.filter((output) => output.id === parseInt(req.params.id)))
@@ -26,7 +41,6 @@ router.get("/:id", (req, res) => {
        res.status(400).json({msg: "No parameter set with that id."})
      }
 })
-
 
 //post request new rendered output
 router.post("/:id", (req, res) => {
@@ -63,6 +77,7 @@ router.post("/:id", (req, res) => {
         //format for new output object that goes into the server outputList cache of output objects with an id
         const newOutput = {
           id: parseInt(req.params.id),
+          userID: parseInt(req.cookies.userID),
           title: paramSetToRun.title,
           output: fileOutputs
         }

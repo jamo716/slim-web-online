@@ -1,5 +1,6 @@
 import React, { createContext, useEffect } from 'react'
 import axios from "axios"
+import Cookies from "js-cookie"
 
 //all axios calls will send cookies?
 axios.defaults.withCredentials = true
@@ -24,12 +25,13 @@ export const NeutralSimProvider = ({children}) => {
 
     //one time initial get of parameter sets and outputs
     useEffect(() => {
+        const userID = Cookies.get("userID")
 
-        axios.get("/paramSet").then((paramSets) => {
+        axios.get(`/paramSet/${userID}`).then((paramSets) => {
             setParamSets(paramSets.data)
         })
     
-        axios.get("/output").then((serverOutputs) => {
+        axios.get(`/output/${userID}`).then((serverOutputs) => {
           setOutputs(serverOutputs.data)
         })
     }, [])
@@ -42,7 +44,7 @@ export const NeutralSimProvider = ({children}) => {
     //adds a new parameter set to the array of parameter sets
     const addParamSet = (paramSet) => {
         //random id generated for new parameter set
-        const id = Math.floor(Math.random() * 10000 + 1)
+        const id = Math.floor(Math.random() * 100000 + 1)
     
         const newParamSet = {id, ...paramSet}
         axios.post("/paramSet", newParamSet)
@@ -59,7 +61,8 @@ export const NeutralSimProvider = ({children}) => {
     //get all outputs froms server
     async function receiveOutput() {
       try {
-        const response = await axios.get('/output/');
+        const userID = Cookies.get("userID")
+        const response = await axios.get(`/output/${userID}`);
         setOutputs(response.data)
       } catch (error) {
         console.error(error);
@@ -79,7 +82,9 @@ export const NeutralSimProvider = ({children}) => {
     
     const renderGraph = async (id) => {
       try{
-        const response = await axios.get(`/output/${id}`)
+        const userID = Cookies.get("userID")
+
+        const response = await axios.get(`/output/${userID}/${id}`)
         setGraphData(response.data[0].output)
       } catch(error) {
         console.log(error)
