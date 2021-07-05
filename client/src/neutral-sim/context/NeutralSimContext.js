@@ -1,6 +1,9 @@
 import React, { createContext, useEffect } from 'react'
 import axios from "axios"
 
+//all axios calls will send cookies?
+axios.defaults.withCredentials = true
+
 export const NeutralSimContext = createContext()
 
 export const NeutralSimProvider = ({children}) => {
