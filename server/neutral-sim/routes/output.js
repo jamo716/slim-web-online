@@ -30,16 +30,6 @@ router.get("/:userid/:id", (req, res) => {
   } catch (error) {
     res.status(404).json({message: error.message})
   }
-
-
-
-
-  const found = outputList.some((output) => output.id === parseInt(req.params.id))
-     if(found){
-       res.json(outputList.filter((output) => output.id === parseInt(req.params.id)))
-     }else{
-       res.status(400).json({msg: "No parameter set with that id."})
-     }
 })
 
 //post request new rendered output

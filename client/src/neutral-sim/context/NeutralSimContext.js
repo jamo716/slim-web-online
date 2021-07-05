@@ -3,7 +3,7 @@ import axios from "axios"
 import Cookies from "js-cookie"
 
 //all axios calls will send cookies?
-axios.defaults.withCredentials = true
+//axios.defaults.withCredentials = true
 
 export const NeutralSimContext = createContext()
 
