@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import { AssortativeMatingContext } from "../context/AssortativeMatingContext"
 import Container from "@material-ui/core/Container"
 import Card from "@material-ui/core/Card"
@@ -20,9 +20,6 @@ const useStyles = makeStyles({
 const OutputElement = (({output}) => {
     const {renderGraph} = useContext(AssortativeMatingContext)
     const classes = useStyles()
-
-    const [outputData, setOutputData] = useState([])
-    const [outputHeaders, setOutputHeaders] = useState([])
 
     //array of header objects for columns of CSV output file
     const indHeaders = []
