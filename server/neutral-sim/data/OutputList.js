@@ -9,6 +9,8 @@ var outputList = [
 //     {
 //         id: 2352352,
 //         title: some_title,
+//         popSize: 1000,
+//         mutRate: 1e-8,
 //         output: [
 //             { generation: '1', mutCount: '0' },
 //             { generation: '100', mutCount: '0' },

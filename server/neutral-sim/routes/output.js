@@ -69,6 +69,8 @@ router.post("/:id", (req, res) => {
           id: parseInt(req.params.id),
           userID: parseInt(req.cookies.userID),
           title: paramSetToRun.title,
+          popSize: paramSetToRun.popSize,
+          mutRate: paramSetToRun.mutRate,
           output: fileOutputs
         }
         //pushing onto server cache of computed outputs
