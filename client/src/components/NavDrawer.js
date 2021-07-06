@@ -13,6 +13,7 @@ import AppBar from "@material-ui/core/AppBar"
 import ToolBar from "@material-ui/core/Toolbar"
 import Avatar from "@material-ui/core/Avatar"
 import SlimIcon from "./media/SLiM_256.jpeg"
+import Divider from "@material-ui/core/Divider"
 
 const DRAWER_WIDTH = 240
 
@@ -87,6 +88,7 @@ export const NavDrawer = ({children}) => {
                     <Typography variant="h6" className={classes.title}>
                         Navigation
                     </Typography>
+                    <Divider/>
                 </div>
                 {/* list of links to pages on site */}
                 <List>

@@ -13,18 +13,6 @@ const ParamSets = (() => {
     const {paramSets} = useContext(NeutralSimContext)
 
     return(
-        // <>
-        //     {paramSets.length > 0 ? 
-        //         paramSets.map((paramSet) => {
-        //             return(
-        //                 <Paper key={paramSet.id} elevation={3}>
-        //                     <ParamSet paramSet={paramSet} onRetrieve={onRetrieve}/>
-        //                 </Paper>
-        //             )
-        //         })
-        //     : <h4>Add a parameter set.</h4>}
-        // </> 
-
         <Container>
             <Grid spacing={3}>
                 {paramSets.map((paramSet) => (
