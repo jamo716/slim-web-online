@@ -12,7 +12,7 @@ router.get("/:userid", (req, res) => {
     const userSets = paramSetList.filter((paramSet) => paramSet.userID === parseInt(req.params.userid))
     res.status(200).json(userSets)
   } catch (error) {
-    
+    res.status(404).json({message: error.message})
   }
 })
   

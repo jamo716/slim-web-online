@@ -1,5 +1,6 @@
 import React, { createContext, useEffect } from 'react'
 import axios from "axios"
+import Cookies from "js-cookie"
 
 export const AssortativeMatingContext = createContext()
 
@@ -21,11 +22,13 @@ export const AssortativeMatingProvider = ({children}) => {
 
     //one time initial get of parameter sets and outputs
     useEffect(() => {
-        axios.get("/api/assortativemating/paramset").then((paramSets) => {
+        const userID = Cookies.get("userID")
+
+        axios.get(`/api/assortativemating/paramset/${userID}`).then((paramSets) => {
             setParamSets(paramSets.data)
         })
     
-        axios.get("/api/assortativemating/output").then((serverOutputs) => {
+        axios.get(`/api/assortativemating/output/${userID}`).then((serverOutputs) => {
           setOutputs(serverOutputs.data)
         })
     }, [])
@@ -55,7 +58,8 @@ export const AssortativeMatingProvider = ({children}) => {
     //get all outputs froms server
     async function receiveOutput() {
         try {
-          const response = await axios.get('/api/assortativemating/output');
+          const userID = Cookies.get("userID")
+          const response = await axios.get(`/api/assortativemating/output/${userID}`);
           setOutputs(response.data)
         } catch (error) {
           console.error(error);
@@ -75,7 +79,8 @@ export const AssortativeMatingProvider = ({children}) => {
 
       const renderGraph = async (id) => {
         try{
-          const response = await axios.get(`/api/assortativemating/output/${id}`)
+          const userID = Cookies.get("userID")
+          const response = await axios.get(`/api/assortativemating/output/${userID}/${id}`)
           setGraphData(response.data[0].output)
         } catch(error) {
           console.log(error)

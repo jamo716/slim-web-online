@@ -104,7 +104,6 @@ const HistogramChart = (() => {
             const phenotypeAtIndex = graphData[index].phenotypes[i]
             data.push([`Ind ${i}`, phenotypeAtIndex])
         }
-        console.log(data)
         return data
     }
 

@@ -1,12 +1,17 @@
 import express from "express"
 import paramsets from "../data/Paramsets.js"
+import cookieParser from "cookie-parser"
 
 const router = express.Router()
 
+//cookie parser middleware that returns an object containing cookie data by key accessed by req.cookies
+router.use(cookieParser())
+
 //responds with full parameter set list
-router.get("/", (req, res) => {
+router.get("/:userid", (req, res) => {
     try {
-        res.status(200).json(paramsets)
+        const userSets = paramsets.filter((paramset) => paramset.userID === parseInt(req.params.userid))
+        res.status(200).json(userSets)
     } catch (error) {
         res.status(404).json({message: error.message})
     }
@@ -16,6 +21,7 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
     const newParamset = {
       id: req.body.id,
+      userID: parseInt(req.cookies.userID),
       title: req.body.title,
       popSize: parseInt(req.body.popSize),
       assortStr: parseFloat(req.body.assortStr),
