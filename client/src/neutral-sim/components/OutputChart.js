@@ -1,4 +1,4 @@
-import { LineChart, Line, XAxis, YAxis, Tooltip, Legend } from 'recharts'
+import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, Label } from 'recharts'
 import {useContext} from "react"
 import { NeutralSimContext } from '../context/NeutralSimContext'
 import Container from "@material-ui/core/Container"
@@ -13,12 +13,14 @@ const OutputChart = (() => {
             {graphData.length > 0 ? 
                 <div>
                     <Typography variant="h6">{`Output Chart`}</Typography>
-                    <LineChart width={400} height={400} data={graphData}>
-                        <Tooltip />
+                    <LineChart width={500} height={500} data={graphData}>
+                        <Tooltip/>
                         <Legend />
                         <Line type="monotone" dataKey="mutCount" stroke="#8884d8" activeDot={{ r: 8 }} />
-                        <XAxis dataKey="generation"/>
-                        <YAxis dataKey="mutCount"/>
+                        <XAxis dataKey="generation" height={60}>
+                            <Label value="Generation" offset={0} position="insideBottom"/>
+                        </XAxis>
+                        <YAxis dataKey="mutCount" label={{ value: 'Count of Mutations', angle: -90, position: 'insideLeft' }} height={10}/>
                     </LineChart>
                 </div>
             : <></>}

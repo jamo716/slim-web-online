@@ -68,7 +68,7 @@ export const NavDrawer = ({children}) => {
         },
         {
             text: "About",
-            icon: <InfoIcon color="primary"/>,
+            icon: <InfoIcon color="default"/>,
             path: "/about"
         }
     ]

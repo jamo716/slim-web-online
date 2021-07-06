@@ -72,7 +72,7 @@ const OutputElement = (({output}) => {
                 <CsvDownloader
                     filename={`neutral_output_${output.id}`}
                     extension=".csv"
-                    separator=";"
+                    separator=","
                     wrapColumnChar="'"
                     columns={columns}
                     datas={datas}

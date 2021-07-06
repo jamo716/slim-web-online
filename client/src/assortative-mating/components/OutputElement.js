@@ -93,7 +93,7 @@ const OutputElement = (({output}) => {
                 <CsvDownloader
                     filename={`assortative_${output.id}`}
                     extension=".csv"
-                    separator=";"
+                    separator=","
                     wrapColumnChar="'"
                     columns={columns}
                     datas={datas}
