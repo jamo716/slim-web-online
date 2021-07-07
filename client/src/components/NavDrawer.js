@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => {
             backgroundColor: "lightgrey"
         },
         root: {
-            display: "flex"
+            display: "flex",
         },
         active: {
             background: "#f4f4f4"

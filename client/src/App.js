@@ -20,7 +20,6 @@ function App() {
 
   return (
     <Router>
-      <div className="app">
         <NavDrawer>
           <Switch>
             <Route path="/neutralsim" component={NeutralSim}/>
@@ -30,7 +29,6 @@ function App() {
             <Route path="/assortativemating-about" component={AssortativeMatingAbout}/>
           </Switch>
         </NavDrawer>
-      </div>
     </Router>
   );
   

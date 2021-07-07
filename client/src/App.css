@@ -1,5 +1,5 @@
 .container {
-  max-width: 100%;
+  width: 2000px;
   margin: 30px auto;
   overflow: auto;
   min-height: 300px;
@@ -15,7 +15,9 @@
 }
 
 .input-output {
+  max-width: 100%;
   display: flex;
+  justify-content: space-evenly
 }
 
 .input {
@@ -23,7 +25,6 @@
 }
 
 .output {
-  margin-left: 10%;
   display: flex;
   width: 1000px;
 }
