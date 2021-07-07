@@ -6,6 +6,8 @@ import AssortativeMating from "./assortative-mating/AssortativeMating";
 import About from "./about/About"
 import NavDrawer from "./components/NavDrawer";
 import Cookies from "js-cookie"
+import NeutralSimAbout from "./neutral-sim/NeutralSimAbout"
+import AssortativeMatingAbout from "./assortative-mating/AssortativeMatingAbout"
 
 
 function App() {
@@ -24,6 +26,8 @@ function App() {
             <Route path="/neutralsim" component={NeutralSim}/>
             <Route path="/assortativemating" component={AssortativeMating}/>
             <Route path="/about" component={About}/>
+            <Route path="/neutralsim-about" component={NeutralSimAbout}/>
+            <Route path="/assortativemating-about" component={AssortativeMatingAbout}/>
           </Switch>
         </NavDrawer>
       </div>
