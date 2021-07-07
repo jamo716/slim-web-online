@@ -15,8 +15,7 @@ const OutputChart = (() => {
                     <Typography variant="h6">{`Output Chart`}</Typography>
                     <LineChart width={500} height={500} data={graphData}>
                         <Tooltip/>
-                        <Legend />
-                        <Line type="monotone" dataKey="mutCount" stroke="#8884d8" activeDot={{ r: 8 }} />
+                        <Line type="monotone" dataKey="mutCount" stroke="#00203FFF" activeDot={{ r: 8 }} />
                         <XAxis dataKey="generation" height={60}>
                             <Label value="Generation" offset={0} position="insideBottom"/>
                         </XAxis>

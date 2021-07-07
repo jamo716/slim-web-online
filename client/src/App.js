@@ -8,7 +8,18 @@ import NavDrawer from "./components/NavDrawer";
 import Cookies from "js-cookie"
 import NeutralSimAbout from "./neutral-sim/NeutralSimAbout"
 import AssortativeMatingAbout from "./assortative-mating/AssortativeMatingAbout"
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#00203FFF"
+    },
+    secondary: {
+      main: '#ADEFD1FF'
+    }
+  }
+});
 
 function App() {
 
@@ -20,6 +31,7 @@ function App() {
 
   return (
     <Router>
+        <MuiThemeProvider theme={theme}>
         <NavDrawer>
           <Switch>
             <Route path="/neutralsim" component={NeutralSim}/>
@@ -29,6 +41,7 @@ function App() {
             <Route path="/assortativemating-about" component={AssortativeMatingAbout}/>
           </Switch>
         </NavDrawer>
+        </MuiThemeProvider>
     </Router>
   );
   

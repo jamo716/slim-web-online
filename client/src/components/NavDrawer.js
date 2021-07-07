@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => {
         },
         drawerPaper: {
             width: DRAWER_WIDTH,
-            backgroundColor: "lightgrey"
+            backgroundColor: "#ADEFD1FF"
         },
         root: {
             display: "flex",
