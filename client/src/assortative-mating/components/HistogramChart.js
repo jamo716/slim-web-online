@@ -133,6 +133,7 @@ const HistogramChart = (() => {
                         loader={<div>Loading Chart</div>}
                         data={data}
                         options={{
+                            colors: ["#2B274E"],
                             hAxis: {
                                 title: 'Phenotypic Value'
                             },
