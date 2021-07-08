@@ -19,12 +19,14 @@
   justify-content: space-evenly
 }
 
-.input {
-  width: 500px;
+.input, .output, .output-chart {
+  width: 750px;
 }
 
 .output {
-  display: flex;
-  width: 1000px;
+  width: 750px;
 }
 
+.output-chart {
+  width: 750px;
+}

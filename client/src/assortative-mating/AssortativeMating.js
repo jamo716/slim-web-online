@@ -20,6 +20,8 @@ const AssortativeMating = () => {
                     <div className="output">
                         <OutputList/>
                         <LoadingCircle/>
+                    </div>
+                    <div className="output-chart">
                         <HistogramChart/>
                     </div>
                 </div>

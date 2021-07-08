@@ -22,6 +22,8 @@ function NeutralSim() {
             <div className="output">
               <OutputList/>
               <LoadingCircle/>
+            </div>
+            <div className="output-chart">
               <OutputChart/>
             </div>
           </div>
