@@ -9,9 +9,13 @@ import Cookies from "js-cookie"
 import NeutralSimAbout from "./neutral-sim/NeutralSimAbout"
 import AssortativeMatingAbout from "./assortative-mating/AssortativeMatingAbout"
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 const theme = createMuiTheme({
   palette: {
+    background: {
+      default: "white"
+    },
     primary: {
       main: "#00203FFF"
     },
@@ -32,6 +36,7 @@ function App() {
   return (
     <Router>
         <MuiThemeProvider theme={theme}>
+        <CssBaseline/>
         <NavDrawer>
           <Switch>
             <Route path="/neutralsim" component={NeutralSim}/>
