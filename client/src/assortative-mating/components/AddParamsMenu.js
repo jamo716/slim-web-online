@@ -37,7 +37,7 @@ const popSizeMarks = [
 const assortStrMarks = [
     {
         value: 0.05,
-        label: 'Low',
+        label: 'High',
     },
     {
         value: 0.25,
@@ -45,7 +45,7 @@ const assortStrMarks = [
     },
     {
         value: 0.5,
-        label: 'High',
+        label: 'Low',
     },
 ]
 
