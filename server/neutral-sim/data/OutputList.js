@@ -8,6 +8,8 @@ var outputList = [
 // const sample List = [
 //     {
 //         id: 2352352,
+//         userID: 1,
+//         run: 1,
 //         title: some_title,
 //         popSize: 1000,
 //         mutRate: 1e-8,
