@@ -98,7 +98,7 @@ const OutputElement = (({output}) => {
                     columns={columns}
                     datas={datas}
                 >
-                    <Button>Download</Button>
+                    <Button>Export CSV</Button>
                 </CsvDownloader>
                 </CardActions>
             </Card>
