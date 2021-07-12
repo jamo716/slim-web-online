@@ -61,12 +61,12 @@ const OutputElement = (({output}) => {
                 <CardHeader 
                     title={
                         <Typography variant="body1">
-                            {output.title}
+                            {`${output.title} Run ${output.run}`}
                         </Typography>
                     }
                 />
                 <CardActions>
-                <Button size="small" color="primary" onClick={() => renderGraph(output.id)}>
+                <Button size="small" color="primary" onClick={() => renderGraph(output.id, output.run)}>
                     Graph Output
                 </Button>
                 <CsvDownloader

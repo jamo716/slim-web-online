@@ -11,7 +11,7 @@ const OutputChart = (() => {
 
     return(
         <Container>
-            <Button onClick={() => clearGraphData()}>Clear Data</Button>
+            <Button color="secondary" variant="contained" onClick={() => clearGraphData()}>Clear Data</Button>
             {graphData.length > 0 ? 
                 <div>
                     <Typography variant="h6">{`Output Chart`}</Typography>
@@ -19,7 +19,7 @@ const OutputChart = (() => {
                         <Tooltip/>
                         {
                             graphData.map(d => (
-                                <Line dataKey="mutCount" data={d.data} name={d.name} key={d.name} stroke={"#" + Math.floor(Math.random()*16777215).toString(16)}/>
+                                <Line dataKey="mutCount" data={d.data} name={`${d.name} Run ${d.run}`} key={`${d.name}_${d.run}`} stroke={"#" + Math.floor(Math.random()*16777215).toString(16)}/>
                             ))
                         }
                         <XAxis dataKey="generation" height={60} allowDuplicatedCategory={false}>

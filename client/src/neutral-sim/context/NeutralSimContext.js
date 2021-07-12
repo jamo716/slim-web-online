@@ -80,23 +80,23 @@ export const NeutralSimProvider = ({children}) => {
     setIsRendering(false)
   }
   
-  const renderGraph = async (id) => {
+  const renderGraph = async (id, run) => {
     try{
       const userID = Cookies.get("userID")
 
-      const response = await axios.get(`/output/${userID}/${id}`)
+      const response = await axios.get(`/output/${userID}/${id}/${run}`)
 
       const newGraphData = {
         name: response.data[0].title,
+        run: response.data[0].run,
         data: response.data[0].output
       }
 
-      if(!graphData.some(data => data.name === response.data[0].title)){
+      if(!graphData.some(data => data.name === response.data[0].title & data.run === response.data[0].run)){
         setGraphData(
           [...graphData, newGraphData]
         )
-      }
-      
+      }      
     } catch(error) {
       console.log(error)
     }

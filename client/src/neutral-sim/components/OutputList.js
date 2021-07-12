@@ -24,7 +24,7 @@ const OutputList = (() => {
             <Typography variant="h6">Outputs</Typography>
             <Grid container spacing={3}>
                 {outputs.map((output) => (
-                        <OutputElement key={output.id} output={output}/>
+                        <OutputElement key={`${output.id}-${output.run}`} output={output}/>
                 ))}
             </Grid>
         </Container>
