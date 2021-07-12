@@ -1,4 +1,4 @@
-import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, Label } from 'recharts'
+import { LineChart, Line, XAxis, YAxis, Tooltip, Label } from 'recharts'
 import {useContext} from "react"
 import { NeutralSimContext } from '../context/NeutralSimContext'
 import Container from "@material-ui/core/Container"
