@@ -127,7 +127,7 @@ const HistogramChart = (() => {
                         onChangeCommitted={(e, value) => {setGenerationIndex(value)}}
                     />
                     <Chart
-                        width={'750px'}
+                        width={'500px'}
                         height={'500px'}
                         chartType="Histogram"
                         loader={<div>Loading Chart</div>}

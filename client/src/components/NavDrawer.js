@@ -31,9 +31,6 @@ const useStyles = makeStyles((theme) => {
             width: DRAWER_WIDTH,
             backgroundColor: "#ADEFD1FF"
         },
-        root: {
-            display: "flex",
-        },
         active: {
             background: "#f4f4f4"
         },
@@ -74,7 +71,7 @@ export const NavDrawer = ({children}) => {
     ]
 
     return (
-        <div className={classes.root}>
+        <div className="root">
             {/* app bar */}
             <AppBar className={classes.appbar} elevation={1}>
                 <ToolBar>

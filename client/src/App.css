@@ -1,5 +1,5 @@
 .container {
-  width: 2250px;
+  width: 100%;
   margin: 30px auto;
   overflow: auto;
   min-height: 300px;
@@ -20,13 +20,13 @@
 }
 
 .input, .output, .output-chart {
-  width: 750px;
+  width: 33%;
 }
 
-.output {
+/* .output {
   width: 750px;
 }
 
 .output-chart {
   width: 750px;
-}
+} */

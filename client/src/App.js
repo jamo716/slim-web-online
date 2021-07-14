@@ -37,7 +37,7 @@ function App() {
     <Router>
         <MuiThemeProvider theme={theme}>
         <CssBaseline/>
-        <NavDrawer>
+        <NavDrawer/>
           <Switch>
             <Route path="/neutralsim" component={NeutralSim}/>
             <Route path="/assortativemating" component={AssortativeMating}/>
@@ -45,7 +45,7 @@ function App() {
             <Route path="/neutralsim-about" component={NeutralSimAbout}/>
             <Route path="/assortativemating-about" component={AssortativeMatingAbout}/>
           </Switch>
-        </NavDrawer>
+        {/* </NavDrawer> */}
         </MuiThemeProvider>
     </Router>
   );
