@@ -1,6 +1,6 @@
 .container {
   width: 100%;
-  margin: 30px auto;
+  margin: auto;
   overflow: auto;
   min-height: 300px;
   padding: 30px;
@@ -16,17 +16,10 @@
 .input-output {
   max-width: 100%;
   display: flex;
-  justify-content: space-evenly
+  justify-content: space-between
 }
 
 .input, .output, .output-chart {
   width: 33%;
 }
 
-/* .output {
-  width: 750px;
-}
-
-.output-chart {
-  width: 750px;
-} */

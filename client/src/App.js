@@ -41,7 +41,7 @@ function App() {
           <Switch>
             <Route path="/neutralsim" component={NeutralSim}/>
             <Route path="/assortativemating" component={AssortativeMating}/>
-            <Route path="/about" component={About}/>
+            <Route path="/" exact component={About}/>
             <Route path="/neutralsim-about" component={NeutralSimAbout}/>
             <Route path="/assortativemating-about" component={AssortativeMatingAbout}/>
           </Switch>
