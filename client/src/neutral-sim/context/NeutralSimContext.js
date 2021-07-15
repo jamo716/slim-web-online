@@ -79,6 +79,14 @@ export const NeutralSimProvider = ({children}) => {
     receiveOutput()
     setIsRendering(false)
   }
+
+  //deletes an output from the server
+  const deleteOutput = async (id, run) => {
+    const userID = Cookies.get("userID")
+    await axios.delete(`/output/${userID}/${id}/${run}`)
+
+    receiveOutput()
+  }
   
   const renderGraph = async (id, run) => {
     try{
@@ -117,6 +125,7 @@ export const NeutralSimProvider = ({children}) => {
           addParamSet,
           deleteParamSet,
           renderParameterSet,
+          deleteOutput,
           renderGraph,
           clearGraphData
       }}>

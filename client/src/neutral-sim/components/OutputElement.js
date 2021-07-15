@@ -8,7 +8,9 @@ import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
 import { makeStyles } from "@material-ui/core"
 import CsvDownloader from "react-csv-downloader"
-import Popover from '@material-ui/core/Popover';
+import Popover from '@material-ui/core/Popover'
+import IconButton from "@material-ui/core/IconButton"
+import DeleteOutlined from "@material-ui/icons/DeleteOutlined"
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -24,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   }))
 
 const OutputElement = (({output}) => {
-    const {renderGraph} = useContext(NeutralSimContext)
+    const {renderGraph, deleteOutput} = useContext(NeutralSimContext)
     const classes = useStyles()
 
     const [anchorEl, setAnchorEl] = useState(null)
@@ -58,7 +60,12 @@ const OutputElement = (({output}) => {
                 onMouseEnter={handlePopoverOpen}
                 onMouseLeave={handlePopoverClose}
             >
-                <CardHeader 
+                <CardHeader
+                    action={
+                        <IconButton onClick={() => deleteOutput(output.id, output.run)}>
+                            <DeleteOutlined/>
+                        </IconButton>
+                    } 
                     title={
                         <Typography variant="body1">
                             {`${output.title} Run ${output.run}`}

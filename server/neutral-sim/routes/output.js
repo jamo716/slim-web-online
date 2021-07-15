@@ -37,8 +37,16 @@ router.get("/:userid/:id/:run", (req, res) => {
 //post request new rendered output
 router.post("/:id", (req, res) => {
   
-  //count of runs from this simulation ID 
-  const runs = outputList.filter((output) => output.id === parseInt(req.params.id)).length
+  //get array of the runs at this id, then get the maximum "run" property from those output objects
+  //store the length of the runs and the max value in an object
+  //if the number of runs is equal to zero then you assign a run value of 1, otherwise, add one value to the highest
+  const idRuns = outputList.filter((output) => output.id === parseInt(req.params.id))
+  const maxRuns = Math.max.apply(Math, idRuns.map(function(o) { return o.run; }))
+
+  const runObject = {
+    len: idRuns.length,
+    runs: maxRuns
+  }
 
   //stores outputs from csv file for a single simulation run
   const fileOutputs = []
@@ -71,7 +79,7 @@ router.post("/:id", (req, res) => {
       const newOutput = {
         id: parseInt(req.params.id),
         userID: parseInt(req.cookies.userID),
-        run: (runs + 1),
+        run: (runObject.len === 0 ? 1 : (runObject.runs + 1)),
         title: paramSetToRun.title,
         popSize: paramSetToRun.popSize,
         mutRate: paramSetToRun.mutRate,
@@ -83,4 +91,14 @@ router.post("/:id", (req, res) => {
   })
 })
 
-  export default router
+router.delete("/:userid/:id/:run", (req, res) => {
+  try {
+    const indexToDelete = outputList.findIndex(set => set.userID === parseInt(req.params.userid) & set.id === parseInt(req.params.id) & set.run === parseInt(req.params.run))
+    outputList.splice(indexToDelete, 1)
+    res.json(outputList)
+  } catch (error) {
+    res.status(404).json({message: error.message})
+  }
+})
+
+export default router
