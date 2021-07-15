@@ -18,7 +18,7 @@ const Header = (() => {
         <Container >
             <header className="header">
                     <Typography variant="h5">Neutral Simulation</Typography>
-                    <IconButton color="primary" onClick={() => history.push("/neutralsim-about")}>
+                    <IconButton color="primary" onClick={() => history.push("/")}>
                         <HelpIcon fontSize="large"/>
                     </IconButton>
             </header>

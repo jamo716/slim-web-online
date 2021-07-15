@@ -1,9 +1,6 @@
 import React from 'react'
-import { useHistory } from "react-router"
 import { makeStyles } from '@material-ui/core'
 import Container from "@material-ui/core/Container"
-import IconButton from "@material-ui/core/IconButton"
-import ArrowBackOutlined from '@material-ui/icons/ArrowBackOutlined';
 import Grid from "@material-ui/core/Grid"
 import InfoCard from "./components/InfoCard"
 
@@ -20,24 +17,44 @@ const useStyles = makeStyles({
 const infoCards = [
   {
     image: NeutralImage,
+    path: "/neutralsim",
     title: "Neutral Simulation",
     abstract: "A simple simulation that demonstrates the phenomenon of mutation-drift balance in a randomly mating population.",
   },
   {
     image: AssortativeImage,
+    path: "/assortativemating",
     title: "Assortative Mating Simulation",
     abstract: "A simulation that demonstrates how assortative mating increases genetic variance for a quantitative trait."
   },
   {
     image: FillerImage,
-    title: "Another Simulation",
+    path: "/",
+    title: "Third Simulation",
+    abstract: "This is the abstract for another simulation"
+  },
+  {
+    image: FillerImage,
+    path: "/",
+    title: "Fourth Simulation",
+    abstract: "This is the abstract for another simulation"
+  },
+  {
+    image: FillerImage,
+    path: "/",
+    title: "Fifth Simulation",
+    abstract: "This is the abstract for another simulation"
+  },
+  {
+    image: FillerImage,
+    path: "/",
+    title: "Sixth Simulation",
     abstract: "This is the abstract for another simulation"
   }
 ]
 
 export const NeutralSimAbout = () => {
 
-    const history = useHistory()
     const classes = useStyles()
 
     return (
@@ -47,7 +64,7 @@ export const NeutralSimAbout = () => {
                 infoCards.map(infoCard => {
                   return(
                     <Grid key={infoCard.title} item xs={4}>
-                      <InfoCard image={infoCard.image} title={infoCard.title} abstract={infoCard.abstract}/>
+                      <InfoCard image={infoCard.image} path={infoCard.path} title={infoCard.title} abstract={infoCard.abstract}/>
                     </Grid>
                   )
                 })

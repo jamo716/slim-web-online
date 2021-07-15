@@ -54,6 +54,11 @@ export const NavDrawer = ({children}) => {
 
     const pages = [
         {
+            text: "About The Simulations",
+            icon: <InfoIcon />,
+            path: "/"
+        },
+        {
             text: "Neutral Simulation",
             icon: <ComputerIcon color="primary"/>,
             path: "/neutralsim"
@@ -63,11 +68,6 @@ export const NavDrawer = ({children}) => {
             icon: <ComputerIcon color="primary"/>,
             path: "/assortativemating"
         },
-        {
-            text: "About",
-            icon: <InfoIcon />,
-            path: "/"
-        }
     ]
 
     return (

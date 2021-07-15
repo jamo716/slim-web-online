@@ -18,7 +18,7 @@ const Header = (() => {
         <Container>
             <header className="header">
                 <Typography variant="h5">Assortative Mating</Typography>
-                <IconButton color="primary" onClick={() => history.push("/assortativemating-about")}>
+                <IconButton color="primary" onClick={() => history.push("/")}>
                         <HelpIcon fontSize="large"/>
                     </IconButton>
             </header>
