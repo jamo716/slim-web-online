@@ -11,7 +11,6 @@ const OutputChart = (() => {
 
     return(
         <Container>
-            <Button color="secondary" variant="contained" onClick={() => clearGraphData()}>Clear Data</Button>
             {graphData.length > 0 ? 
                 <div>
                     <Typography variant="h6">{`Output Chart`}</Typography>
@@ -27,6 +26,7 @@ const OutputChart = (() => {
                         </XAxis>
                         <YAxis dataKey="mutCount" label={{ value: 'Count of Mutations', angle: -90, position: 'insideLeft' }} height={10}/>
                     </LineChart>
+                    <Button color="secondary" variant="contained" onClick={() => clearGraphData()}>Clear Data</Button>
                 </div>
             : <></>}
         </Container>
