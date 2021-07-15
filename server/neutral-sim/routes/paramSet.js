@@ -35,16 +35,11 @@ router.delete("/:id", (req, res) => {
   const found = paramSetList.some((paramSet) => paramSet.id === parseInt(req.params.id))
 
   if(found){
-      const filtered = paramSetList.filter((paramSet) => paramSet.id !== parseInt(req.params.id))
-      
-      //clear out the paramSetList
-      paramSetList.splice(0, paramSetList.length)
-    
-      //push the non-deleted elements back onto it
-      for(let i = 0; i < filtered.length; i++){
-          paramSetList.push(filtered[i])
-      }
-      res.json(paramSetList)
+    //cleaner way to delete an object from the server
+    const indexToDelete = paramSetList.findIndex(set => set.id === parseInt(req.params.id))
+    paramSetList.splice(indexToDelete, 1)
+
+    res.json(paramSetList)
   }else{
     res.status(400).json({msg: "No parameter set with that id."})
   }
