@@ -10,16 +10,6 @@ const OutputList = (() => {
     const {outputs} = useContext(NeutralSimContext)
 
     return(
-        // <>
-        // {outputs.map((output) => {
-        //     return(
-        //         <Paper key={output.id} elevation={3}>
-        //             <OutputElement output={output} onGraph={onGraph}/>
-        //         </Paper>
-        //     )
-        // })}
-        // </> 
-
         <Container>
             <Typography variant="h6">Outputs</Typography>
             <Grid container spacing={3}>

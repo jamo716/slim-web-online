@@ -24,7 +24,7 @@ const useStyles = makeStyles({
 
 const ParamSet = (({paramSet}) => {
 
-    const {deleteParamSet, renderParameterSet} = useContext(NeutralSimContext)
+    const {deleteParamSet, renderParameterSet, isRendering} = useContext(NeutralSimContext)
 
     const classes = useStyles()
 
@@ -44,7 +44,7 @@ const ParamSet = (({paramSet}) => {
                     }
                 />
                 <CardActions>
-                <Button size="small" color="primary" onClick={() => renderParameterSet(paramSet.id)}>
+                <Button size="small" color="primary" onClick={() => renderParameterSet(paramSet.id)} disabled={isRendering ? true : false}>
                     Run Parameter Set
                 </Button>
                 </CardActions>
