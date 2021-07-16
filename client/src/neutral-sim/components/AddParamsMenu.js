@@ -22,7 +22,30 @@ const useStyles = makeStyles({
         marginTop: 20, 
         marginBottom: 20
     }
-  })
+})
+
+const popSizeMarks = [
+    {
+        value: 1000,
+        label: '1000',
+    },
+    {
+        value: 2000,
+        label: '2000',
+    },
+    {
+        value: 5000,
+        label: '5000'
+    },
+    {
+        value: 7500,
+        label: "7500"
+    },
+    {
+        value: 10000,
+        label: "10000"
+    }
+]
 
 const AddParamsMenu = (() => {
     const classes = useStyles()
@@ -31,7 +54,7 @@ const AddParamsMenu = (() => {
 
     const [title, setTitle] = useState("")
     const [mutRate, setMutRate] = useState(0)
-    const [popSize, setPopSize] = useState(0)
+    const [popSize, setPopSize] = useState(500)
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -42,8 +65,6 @@ const AddParamsMenu = (() => {
             addParamSet({title, mutRate, popSize})
 
             setTitle("")
-            setMutRate(0)
-            setPopSize(0)
         }
     }
 
@@ -52,7 +73,17 @@ const AddParamsMenu = (() => {
             {showParamMenu ?  
                 <form className="add-params-menu" onSubmit={onSubmit}>
                     <TextField className={classes.field} onChange={(e) => setTitle(e.target.value)} label="Parameter Set Title" variant="outlined" color="primary" fullWidth/>
-                    <TextField className={classes.field} onChange={(e) => setPopSize(e.target.value)} label="Population Size" variant="outlined" color="primary" fullWidth type="number"/>
+                    <Typography>Population Size</Typography>
+                    <Slider
+                        min={1000}
+                        max={10000}
+                        defaultValue={1000}
+                        aria-labelledby="discrete-slider-custom"
+                        step={null}
+                        valueLabelDisplay="auto"
+                        marks={popSizeMarks}
+                        onChangeCommitted={(e, value) => {setPopSize(value)}}
+                    />                    
                     <Typography>Mutation Rate</Typography>
                     <Slider
                         defaultValue={0.00000000}
