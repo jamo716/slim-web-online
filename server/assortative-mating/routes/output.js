@@ -87,4 +87,14 @@ router.post("/:id", (req, res) => {
     }
   })
 
+router.delete("/:userid/:id", (req, res) => {
+  try {
+    const indexToDelete = outputs.findIndex(set => set.userID === parseInt(req.params.userid) & set.id === parseInt(req.params.id))
+    outputs.splice(indexToDelete, 1)
+    res.json(outputs)
+  } catch (error) {
+    res.status(404).json({message: error.message})
+  }
+})
+
 export default router

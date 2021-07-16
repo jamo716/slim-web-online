@@ -24,7 +24,7 @@ const useStyles = makeStyles({
 
 const ParamSet = (({paramSet}) => {
 
-    const {deleteParamSet, renderParameterSet} = useContext(AssortativeMatingContext)
+    const {deleteParamSet, renderParameterSet, isRendering} = useContext(AssortativeMatingContext)
 
     const classes = useStyles()
 
@@ -44,9 +44,9 @@ const ParamSet = (({paramSet}) => {
                     }
                 />
                 <CardActions>
-                <Button size="small" color="primary" onClick={() => renderParameterSet(paramSet.id)}>
-                    Run Parameter Set
-                </Button>
+                    <Button size="small" disabled={isRendering ? true : false} color="primary" onClick={() => renderParameterSet(paramSet.id)}>
+                        Run Parameter Set
+                    </Button>
                 </CardActions>
             </Card>
         </Container>
