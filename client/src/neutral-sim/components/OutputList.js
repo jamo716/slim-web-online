@@ -4,10 +4,12 @@ import { NeutralSimContext } from "../context/NeutralSimContext"
 import Container from "@material-ui/core/Container"
 import Grid from "@material-ui/core/Grid"
 import Typography from "@material-ui/core/Typography"
+import OutputRenderingCard from "./OutputRenderingCard"
+
 
 
 const OutputList = (() => {
-    const {outputs} = useContext(NeutralSimContext)
+    const {outputs, isRendering} = useContext(NeutralSimContext)
 
     return(
         <Container>
@@ -16,11 +18,10 @@ const OutputList = (() => {
                 {outputs.map((output) => (
                         <OutputElement key={`${output.id}-${output.run}`} output={output}/>
                 ))}
+                {isRendering ? <OutputRenderingCard/> : null}  
             </Grid>
         </Container>
     )
 })
-
-//<OutputElement outputID={output.id}/>
 
 export default OutputList

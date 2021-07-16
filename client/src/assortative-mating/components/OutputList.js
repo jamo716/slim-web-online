@@ -4,10 +4,11 @@ import { AssortativeMatingContext } from "../context/AssortativeMatingContext"
 import Container from "@material-ui/core/Container"
 import Grid from "@material-ui/core/Grid"
 import Typography from "@material-ui/core/Typography"
+import OutputRenderingCard from "./OutputRenderingCard"
 
 
 const OutputList = (() => {
-    const {outputs} = useContext(AssortativeMatingContext)
+    const {outputs, isRendering} = useContext(AssortativeMatingContext)
 
     return(
         <Container>
@@ -16,6 +17,7 @@ const OutputList = (() => {
                 {outputs.map((output) => (
                     <OutputElement key={output.id} output={output}/>
                 ))}
+                {isRendering ? <OutputRenderingCard/> : null}  
             </Grid>
         </Container>
     )

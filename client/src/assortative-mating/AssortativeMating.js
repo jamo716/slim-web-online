@@ -4,7 +4,6 @@ import Header from "./components/Header"
 import AddParamsMenu from './components/AddParamsMenu'
 import Paramsets from './components/Paramsets'
 import OutputList from "./components/OutputList"
-import LoadingCircle from "./components/LoadingCircle"
 import HistogramChart from "./components/HistogramChart"
 
 const AssortativeMating = () => {
@@ -19,7 +18,6 @@ const AssortativeMating = () => {
                     </div>
                     <div className="output">
                         <OutputList/>
-                        <LoadingCircle/>
                     </div>
                     <div className="output-chart">
                         <HistogramChart/>

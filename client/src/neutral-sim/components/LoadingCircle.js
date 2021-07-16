@@ -6,7 +6,7 @@ export const LoadingCircle = () => {
     const {isRendering} = useContext(NeutralSimContext)
 
     return (
-        <div>
+        <div className="loading-circle">
             {isRendering ? <CircularProgress/> : null}
         </div>
     )

@@ -6,7 +6,6 @@ import AddParamsMenu from "./components/AddParamsMenu"
 import OutputList from "./components/OutputList";
 import OutputChart from "./components/OutputChart";
 import {NeutralSimProvider} from "./context/NeutralSimContext"
-import LoadingCircle from "./components/LoadingCircle"
 
 function NeutralSim() {
   
@@ -21,7 +20,6 @@ function NeutralSim() {
             </div>
             <div className="output">
               <OutputList/>
-              <LoadingCircle/>
             </div>
             <div className="output-chart">
               <OutputChart/>

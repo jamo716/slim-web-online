@@ -67,9 +67,14 @@ const OutputElement = (({output}) => {
                         </IconButton>
                     } 
                     title={
-                        <Typography variant="body1">
-                            {`${output.title} Run ${output.run}`}
-                        </Typography>
+                        <div>
+                            <Typography variant="body1">
+                                {`${output.title}`}
+                            </Typography>
+                            <Typography variant="body2">
+                                {`Run ${output.run}`}
+                            </Typography>
+                        </div>
                     }
                 />
                 <CardActions>
