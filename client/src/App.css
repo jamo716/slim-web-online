@@ -1,28 +1,7 @@
-.container {
-  width: 100%;
-  margin: auto;
-  overflow: auto;
-  min-height: 300px;
-  padding: 30px;
-}
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-}
-
-.input-output {
-  max-width: 100%;
-  display: flex;
-  justify-content: space-between
-}
-
-.input, .output, .output-chart {
-  width: 33%;
-}
-
-.loading-cirlce {
-  margin-top: 100px;
 }
