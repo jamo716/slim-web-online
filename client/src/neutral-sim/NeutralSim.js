@@ -6,26 +6,53 @@ import AddParamsMenu from "./components/AddParamsMenu"
 import OutputList from "./components/OutputList";
 import OutputChart from "./components/OutputChart";
 import {NeutralSimProvider} from "./context/NeutralSimContext"
+import Grid from "@material-ui/core/Grid"
+import { makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles({
+  root: {
+    marginTop: 30,
+    marginLeft: 10
+  }
+})
 
 function NeutralSim() {
   
+  const classes = useStyles()
+
     return (
+      // <NeutralSimProvider>
+      //   <div className="container">
+      //     <div className="input-output">
+      //       <div className="input">
+      //         <Header/>
+      //         <AddParamsMenu/>
+      //         <ParamSets/>
+      //       </div>
+      //       <div className="output">
+      //         <OutputList/>
+      //       </div>
+      //       <div className="output-chart">
+      //         <OutputChart/>
+      //       </div>
+      //     </div>
+      //   </div>
+      // </NeutralSimProvider>
+
       <NeutralSimProvider>
-        <div className="container">
-          <div className="input-output">
-            <div className="input">
+          <Grid container className={classes.root}>
+            <Grid item xs={4} className={classes.input}>
               <Header/>
               <AddParamsMenu/>
               <ParamSets/>
-            </div>
-            <div className="output">
+            </Grid>
+            <Grid item xs={4}>
               <OutputList/>
-            </div>
-            <div className="output-chart">
+            </Grid>
+            <Grid item xs={4}>
               <OutputChart/>
-            </div>
-          </div>
-        </div>
+            </Grid>
+          </Grid>
       </NeutralSimProvider>
     );
   }
