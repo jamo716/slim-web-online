@@ -1,9 +1,9 @@
 import express from "express"
 import fs from "fs"
 import csv from "fast-csv"
-import paramSetList from "../data/ParamSetsList.js"
+import paramSetList from "../data/Paramsets.js"
 import {spawn} from "child_process"
-import outputList from "../data/OutputList.js"
+import outputs from "../data/Outputs.js"
 import cookieParser from "cookie-parser"
 
 const router = express.Router()
@@ -14,7 +14,7 @@ router.use(cookieParser())
 //get request for entire list of outputs
 router.get("/:userid", (req, res) => {
   try{
-    const userOutputs = outputList.filter((output) => output.userID === parseInt(req.params.userid))
+    const userOutputs = outputs.filter((output) => output.userID === parseInt(req.params.userid))
     res.status(200).json(userOutputs)
   }catch{
     res.status(404).json({message: error.message})
@@ -24,7 +24,7 @@ router.get("/:userid", (req, res) => {
 //get request for a single output with a run specified 
 router.get("/:userid/:id/:run", (req, res) => {
   try {
-    const userOutputs = outputList.filter((output) => output.userID === parseInt(req.params.userid))
+    const userOutputs = outputs.filter((output) => output.userID === parseInt(req.params.userid))
     const idOutputs = userOutputs.filter((output) => output.id === parseInt(req.params.id)) 
     const runOutput = idOutputs.filter((output) => output.run === parseInt(req.params.run))
     res.json(runOutput)
@@ -40,7 +40,7 @@ router.post("/:id", (req, res) => {
   //get array of the runs at this id, then get the maximum "run" property from those output objects
   //store the length of the runs and the max value in an object
   //if the number of runs is equal to zero then you assign a run value of 1, otherwise, add one value to the highest
-  const idRuns = outputList.filter((output) => output.id === parseInt(req.params.id))
+  const idRuns = outputs.filter((output) => output.id === parseInt(req.params.id))
   const maxRuns = Math.max.apply(Math, idRuns.map(function(o) { return o.run; }))
 
   const runObject = {
@@ -75,7 +75,7 @@ router.post("/:id", (req, res) => {
     })
     .on("end", () => {
       res.status(200).json(fileOutputs)
-      //format for new output object that goes into the server outputList cache of output objects with an id
+      //format for new output object that goes into the server outputs cache of output objects with an id
       const newOutput = {
         id: parseInt(req.params.id),
         userID: parseInt(req.cookies.userID),
@@ -86,16 +86,16 @@ router.post("/:id", (req, res) => {
         output: fileOutputs
       }
       //pushing onto server cache of computed outputs
-      outputList.push(newOutput)
+      outputs.push(newOutput)
     })
   })
 })
 
 router.delete("/:userid/:id/:run", (req, res) => {
   try {
-    const indexToDelete = outputList.findIndex(set => set.userID === parseInt(req.params.userid) & set.id === parseInt(req.params.id) & set.run === parseInt(req.params.run))
-    outputList.splice(indexToDelete, 1)
-    res.json(outputList)
+    const indexToDelete = outputs.findIndex(set => set.userID === parseInt(req.params.userid) & set.id === parseInt(req.params.id) & set.run === parseInt(req.params.run))
+    outputs.splice(indexToDelete, 1)
+    res.json(outputs)
   } catch (error) {
     res.status(404).json({message: error.message})
   }
