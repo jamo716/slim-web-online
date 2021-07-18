@@ -27,11 +27,11 @@ export const NeutralSimProvider = ({children}) => {
   useEffect(() => {
       const userID = Cookies.get("userID")
 
-      axios.get(`/paramSet/${userID}`).then((paramSets) => {
+      axios.get(`/api/neutralsim/paramset/${userID}`).then((paramSets) => {
           setParamSets(paramSets.data)
       })
   
-      axios.get(`/output/${userID}`).then((serverOutputs) => {
+      axios.get(`/api/neutralsim/output/${userID}`).then((serverOutputs) => {
         setOutputs(serverOutputs.data)
       })
   }, [])
@@ -47,13 +47,13 @@ export const NeutralSimProvider = ({children}) => {
       const id = Math.floor(Math.random() * 100000 + 1)
   
       const newParamSet = {id, ...paramSet}
-      axios.post("/paramSet", newParamSet)
+      axios.post("/api/neutralsim/paramset", newParamSet)
       setParamSets([...paramSets, newParamSet])
   }
   
   //deletes a parameter set
   const deleteParamSet = (id) => {
-    axios.delete(`/paramSet/${id}`)
+    axios.delete(`/api/neutralsim/paramset/${id}`)
 
     setParamSets(paramSets.filter((paramSet) => paramSet.id !== id))
   }
@@ -62,7 +62,7 @@ export const NeutralSimProvider = ({children}) => {
   async function receiveOutput() {
     try {
       const userID = Cookies.get("userID")
-      const response = await axios.get(`/output/${userID}`);
+      const response = await axios.get(`/api/neutralsim/output/${userID}`);
       setOutputs(response.data)
     } catch (error) {
       console.error(error);
@@ -73,7 +73,7 @@ export const NeutralSimProvider = ({children}) => {
   const renderParameterSet = async (id) => {
     setIsRendering(true)
     //wait until the post finishes
-    await axios.post(`/output/${id}`)
+    await axios.post(`/api/neutralsim/output/${id}`)
     //then update the front end with all computed outputs
 
     receiveOutput()
@@ -83,7 +83,7 @@ export const NeutralSimProvider = ({children}) => {
   //deletes an output from the server
   const deleteOutput = async (id, run) => {
     const userID = Cookies.get("userID")
-    await axios.delete(`/output/${userID}/${id}/${run}`)
+    await axios.delete(`/api/neutralsim/output/${userID}/${id}/${run}`)
 
     receiveOutput()
   }
@@ -92,7 +92,7 @@ export const NeutralSimProvider = ({children}) => {
     try{
       const userID = Cookies.get("userID")
 
-      const response = await axios.get(`/output/${userID}/${id}/${run}`)
+      const response = await axios.get(`/api/neutralsim/output/${userID}/${id}/${run}`)
 
       const newGraphData = {
         name: response.data[0].title,
@@ -132,5 +132,4 @@ export const NeutralSimProvider = ({children}) => {
           {children}
       </NeutralSimContext.Provider>
   )
-
 }

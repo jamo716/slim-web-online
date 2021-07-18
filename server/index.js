@@ -16,8 +16,8 @@ app.use(express.json())
 
 //endpoints for the proof of concept neutral simulation
 //these will be phased out eventually
-app.use("/output", outputRouter)
-app.use("/paramSet", paramSetRouter)
+app.use("/api/neutralsim/output", outputRouter)
+app.use("/api/neutralsim/paramset", paramSetRouter)
 
 //endpoints for assortative mating simulation
 app.use("/api/assortativemating/paramset", paramsetRouterAM)
