@@ -101,7 +101,6 @@ const OutputElement = (({output}) => {
                     filename={`assortative_${output.id}`}
                     extension=".csv"
                     separator=","
-                    wrapColumnChar="'"
                     columns={columns}
                     datas={datas}
                 >

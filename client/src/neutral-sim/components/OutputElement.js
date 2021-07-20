@@ -85,7 +85,6 @@ const OutputElement = (({output}) => {
                     filename={`neutral_output_${output.id}`}
                     extension=".csv"
                     separator=","
-                    wrapColumnChar="'"
                     columns={columns}
                     datas={datas}
                 >
