@@ -27,7 +27,7 @@ function App() {
 
   useEffect(() => {
     if(!Cookies.get("userID")){
-      Cookies.set("userID", Math.floor(Math.random() * 100000 + 1))
+      Cookies.set("userID", Math.floor(Math.random() * 100000 + 1), {expires: 365})
     }
   }, [])
 
