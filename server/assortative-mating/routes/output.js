@@ -76,6 +76,17 @@ router.post("/:id", (req, res) => {
         }
         //pushing onto server cache of computed outputs
         outputs.push(newOutput)
+
+        //path to output folder we delete
+        const path = `server/assortative-mating/slim-output/${parseInt(req.params.id)}`
+
+        //recursively delete output folder and its contents
+        fs.rmdir(path, {recursive: true}, (error) => {
+          if(error){
+            console.log(error)
+            return
+          }
+        })
       })
     })
   }

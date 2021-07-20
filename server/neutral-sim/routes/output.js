@@ -74,7 +74,9 @@ router.post("/:id", (req, res) => {
       fileOutputs.push(generationOutput)
     })
     .on("end", () => {
+      //sends just the outputs from this sim rendering
       res.status(200).json(fileOutputs)
+
       //format for new output object that goes into the server outputs cache of output objects with an id
       const newOutput = {
         id: parseInt(req.params.id),
@@ -85,8 +87,20 @@ router.post("/:id", (req, res) => {
         mutRate: paramSetToRun.mutRate,
         output: fileOutputs
       }
+
       //pushing onto server cache of computed outputs
       outputs.push(newOutput)
+
+      //path to output folder we delete
+      const path = `server/neutral-sim/slim-output/${parseInt(req.params.id)}`
+
+      //recursively delete output folder and its contents
+      fs.rmdir(path, {recursive: true}, (error) => {
+        if(error){
+          console.log(error)
+          return
+        }
+      })
     })
   })
 })
