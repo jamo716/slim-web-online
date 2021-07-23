@@ -1,7 +1,7 @@
 import express from "express"
 import cors from "cors"
 import outputRouter from "./neutral-sim/routes/output.js"
-import paramSetRouter from "./neutral-sim/routes/paramSet.js"
+import paramSetRouter from "./neutral-sim/routes/paramset.js"
 
 import paramsetRouterAM from "./assortative-mating/routes/paramset.js"
 import outputRouterAM from "./assortative-mating/routes/output.js"
