@@ -1,5 +1,4 @@
 import express from "express"
-import paramsets from "../data/Paramsets.js"
 import cookieParser from "cookie-parser"
 import Assort_Paramset from "../models/paramset.js"
 
