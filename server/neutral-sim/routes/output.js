@@ -92,9 +92,6 @@ router.post("/:id", async (req, res) => {
       fileOutputs.push(generationOutput)
     })
     .on("end", () => {
-      //sends just the outputs from this sim rendering
-      
-
       //format for new output object that goes into the server outputs cache of output objects with an id
       const newOutput = new Neut_Output({
         id: parseInt(req.params.id),
@@ -129,9 +126,10 @@ router.post("/:id", async (req, res) => {
 
 router.delete("/:userid/:id/:run", (req, res) => {
   try {
-    const indexToDelete = outputs.findIndex(set => set.userID === parseInt(req.params.userid) & set.id === parseInt(req.params.id) & set.run === parseInt(req.params.run))
-    outputs.splice(indexToDelete, 1)
-    res.json(outputs)
+    Neut_Output.findOneAndDelete({userID: parseInt(req.params.userid), id: parseInt(req.params.id), run: parseInt(req.params.run)})
+      .then(output => {
+        res.status(200).json(output)
+      })
   } catch (error) {
     res.status(404).json({message: error.message})
   }
