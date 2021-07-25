@@ -1,8 +1,6 @@
-import outputs from "../data/Outputs.js"
 import express from "express"
 import fs from "fs"
 import csv from "fast-csv"
-import paramsets from "../data/Paramsets.js"
 import {spawn} from "child_process"
 import cookieParser from "cookie-parser"
 import Assort_Output from "../models/output.js"
@@ -16,8 +14,12 @@ router.use(cookieParser())
 //get request for entire list of outputs
 router.get("/:userid", (req, res) => {
     try{
-      const userOutputs = outputs.filter((output) => output.userID === parseInt(req.params.userid))
-      res.status(200).send (userOutputs)
+      Assort_Output.find({userID: parseInt(req.params.userid)})
+        .then(outputs => {
+          res.status(200).json(outputs)
+        })
+      // const userOutputs = outputs.filter((output) => output.userID === parseInt(req.params.userid))
+      // res.status(200).send (userOutputs)
     }catch{
       res.status(404).json({message: error.message})
     }
@@ -26,8 +28,12 @@ router.get("/:userid", (req, res) => {
 //get request for a single output
 router.get("/:userid/:id", (req, res) => {
   try {
-    const userOutputs = outputs.filter((output) => output.userID === parseInt(req.params.userid))
-    res.json(userOutputs.filter((output) => output.id === parseInt(req.params.id)))
+    Assort_Output.find({userID: parseInt(req.params.userid), id: parseInt(req.params.id)})
+      .then(output => {
+        res.status(200).json(output)
+      })
+    // const userOutputs = outputs.filter((output) => output.userID === parseInt(req.params.userid))
+    // res.json(userOutputs.filter((output) => output.id === parseInt(req.params.id)))
 
   } catch (error) {
     res.status(404).json({message: error.message})
@@ -35,15 +41,22 @@ router.get("/:userid/:id", (req, res) => {
 })
 
 //post request new rendered output
-router.post("/:id", (req, res) => {
+router.post("/:id", async (req, res) => {
+
+  //wait to get array of outputs from the database that match request ID
+  const outputs = await Assort_Output.find({id: parseInt(req.params.id)})
+
   const found = outputs.some((output) => output.id === parseInt(req.params.id))
 
   if(!found){
     //stores outputs from csv file for a single simulation run
     const fileOutputs = []
 
-    //first index referenced because the API returns an array of length one
-    const paramsetToRun = paramsets.filter((paramset) => paramset.id === parseInt(req.params.id))[0]
+    //get parameter set to render in slim from database
+    let paramsetToRun = await Assort_Paramset.find({id: parseInt(req.params.id)})
+  
+    //reassign paramset to render in simulation as first index since database query returns an array
+    paramsetToRun = paramsetToRun[0]
 
     const child = spawn("slim", ["-d", `nQTL=${paramsetToRun.nQTL}`, "-d", `popSize=${paramsetToRun.popSize}`, "-d", `assortStr=${paramsetToRun.assortStr}`, "-d", `id=${parseInt(req.params.id)}`, "server/assortative-mating/slim-scripts/assortative-mating.slim"])
 
@@ -65,9 +78,8 @@ router.post("/:id", (req, res) => {
         fileOutputs.push(generationOutput)
       })
       .on("end", () => {
-        res.status(200).json(fileOutputs)
         //format for new output object that goes into the server outputList cache of output objects with an id
-        const newOutput = {
+        const newOutput = new Assort_Output({
           id: parseInt(req.params.id),
           userID: parseInt(req.cookies.userID),
           title: paramsetToRun.title,
@@ -75,9 +87,13 @@ router.post("/:id", (req, res) => {
           assortStr: paramsetToRun.assortStr,
           nQTL: paramsetToRun.nQTL,
           output: fileOutputs
-        }
-        //pushing onto server cache of computed outputs
-        outputs.push(newOutput)
+        })
+        
+        //output object saved to the database
+        newOutput.save()
+        .then(output => {
+          res.status(200).json(output)
+        })
 
         //path to output folder we delete
         const path = `server/assortative-mating/slim-output/${parseInt(req.params.id)}`
@@ -102,9 +118,10 @@ router.post("/:id", (req, res) => {
 
 router.delete("/:userid/:id", (req, res) => {
   try {
-    const indexToDelete = outputs.findIndex(set => set.userID === parseInt(req.params.userid) & set.id === parseInt(req.params.id))
-    outputs.splice(indexToDelete, 1)
-    res.json(outputs)
+    Assort_Output.findOneAndDelete({userID: parseInt(req.params.userid), id: parseInt(req.params.id)})
+      .then(output => {
+        res.status(200).json(output)
+      })
   } catch (error) {
     res.status(404).json({message: error.message})
   }
