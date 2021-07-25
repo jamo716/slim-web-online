@@ -2,7 +2,6 @@ import express from "express"
 import fs from "fs"
 import csv from "fast-csv"
 import {spawn} from "child_process"
-import outputs from "../data/Outputs.js"
 import cookieParser from "cookie-parser"
 import Neut_Output from "../models/output.js"
 import Neut_Paramset from "../models/paramset.js"
@@ -31,12 +30,6 @@ router.get("/:userid/:id/:run", (req, res) => {
       .then(output => {
         res.status(200).json(output)
       })
-
-    // const userOutputs = outputs.filter((output) => output.userID === parseInt(req.params.userid))
-    // const idOutputs = userOutputs.filter((output) => output.id === parseInt(req.params.id)) 
-    // const runOutput = idOutputs.filter((output) => output.run === parseInt(req.params.run))
-    // res.json(runOutput)
-
   } catch (error) {
     res.status(404).json({message: error.message})
   }
