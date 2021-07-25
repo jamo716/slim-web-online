@@ -55,13 +55,13 @@ router.put("/:id", async (req, res) => {
 //post request new rendered output
 router.post("/:id", async (req, res) => {
   
-  //get array of the runs at this id, then get the maximum "run" property from those output objects
-  //store the length of the runs and the max value in an object
-  //if the number of runs is equal to zero then you assign a run value of 1, otherwise, add one value to the highest
+  //wait to get array of outputs from the database that match request ID
   const outputs = await Neut_Output.find({id: parseInt(req.params.id)})
 
+  //store the number of the runs and the max value in an object
+  //if the number of runs is equal to zero then you assign a run value of 1, otherwise, add one value to the highest
   const idRuns = outputs.filter((output) => output.id === parseInt(req.params.id))
-  const maxRuns = Math.max.apply(Math, idRuns.map(function(o) { return o.run; }))
+  const maxRuns = Math.max.apply(Math, idRuns.map(function(o) { return o.run }))
 
   const runObject = {
     len: idRuns.length,
@@ -71,13 +71,16 @@ router.post("/:id", async (req, res) => {
   //stores outputs from csv file for a single simulation run
   const fileOutputs = []
 
-  //first index referenced because the API returns an array of length one
-  // const paramSetToRun = paramSetList.filter((paramSet) => paramSet.id === parseInt(req.params.id))[0]
+  //get parameter set to render in slim from database
   let paramSetToRun = await Neut_Paramset.find({id: parseInt(req.params.id)})
+  
+  //reassign paramset to render in simulation as first index since database query returns an array
   paramSetToRun = paramSetToRun[0]
 
+  //spawn a child process to run slim script with specified parameters
   const child = spawn("slim", ["-d", `mutRate=${paramSetToRun.mutRate}`, "-d", `popSize=${paramSetToRun.popSize}`, "-d", `id=${parseInt(req.params.id)}`, "server/neutral-sim/slim-scripts/test.slim"])
 
+  //child process finishes
   child.on("exit", (code, signal) => {
     if(code){
         //console.log(code)
@@ -85,6 +88,7 @@ router.post("/:id", async (req, res) => {
     if(signal){
         //console.log(signal)
     }
+    //open a read stream for the CSV file that SLiM wrote
     fs.createReadStream(`server/neutral-sim/slim-output/${parseInt(req.params.id)}/test.csv`)
     .pipe(csv.parse({}))
     .on("data", (data) => {
@@ -96,7 +100,7 @@ router.post("/:id", async (req, res) => {
       fileOutputs.push(generationOutput)
     })
     .on("end", () => {
-      //format for new output object that goes into the server outputs cache of output objects with an id
+      //format for new output object that we save to the database
       const newOutput = new Neut_Output({
         id: parseInt(req.params.id),
         userID: parseInt(req.cookies.userID),
@@ -107,8 +111,7 @@ router.post("/:id", async (req, res) => {
         output: fileOutputs
       })
 
-      //pushing onto server cache of computed outputs
-      // outputs.push(newOutput)
+      //output object saved to the database
       newOutput.save()
         .then(output => {
           res.status(200).json(output)
