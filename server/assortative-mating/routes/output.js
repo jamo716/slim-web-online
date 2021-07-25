@@ -5,6 +5,8 @@ import csv from "fast-csv"
 import paramsets from "../data/Paramsets.js"
 import {spawn} from "child_process"
 import cookieParser from "cookie-parser"
+import Assort_Output from "../models/output.js"
+import Assort_Paramset from "../models/paramset.js"
 
 const router = express.Router()
 
