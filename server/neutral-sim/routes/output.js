@@ -117,7 +117,7 @@ router.post("/:id", async (req, res) => {
           res.status(200).json(output)
         })
 
-      //path to output folder we delete
+      //path to output folder we delete after reading from CSV file
       const path = `server/neutral-sim/slim-output/${parseInt(req.params.id)}`
 
       //recursively delete output folder and its contents
