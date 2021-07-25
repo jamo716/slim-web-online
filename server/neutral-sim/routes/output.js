@@ -1,7 +1,6 @@
 import express from "express"
 import fs from "fs"
 import csv from "fast-csv"
-import paramSetList from "../data/Paramsets.js"
 import {spawn} from "child_process"
 import outputs from "../data/Outputs.js"
 import cookieParser from "cookie-parser"
@@ -28,10 +27,15 @@ router.get("/:userid", (req, res) => {
 //get request for a single output with a run specified 
 router.get("/:userid/:id/:run", (req, res) => {
   try {
-    const userOutputs = outputs.filter((output) => output.userID === parseInt(req.params.userid))
-    const idOutputs = userOutputs.filter((output) => output.id === parseInt(req.params.id)) 
-    const runOutput = idOutputs.filter((output) => output.run === parseInt(req.params.run))
-    res.json(runOutput)
+    Neut_Output.find({userID: parseInt(req.params.userid), id: parseInt(req.params.id), run: parseInt(req.params.run)})
+      .then(output => {
+        res.status(200).json(output)
+      })
+
+    // const userOutputs = outputs.filter((output) => output.userID === parseInt(req.params.userid))
+    // const idOutputs = userOutputs.filter((output) => output.id === parseInt(req.params.id)) 
+    // const runOutput = idOutputs.filter((output) => output.run === parseInt(req.params.run))
+    // res.json(runOutput)
 
   } catch (error) {
     res.status(404).json({message: error.message})
