@@ -47,14 +47,32 @@ const popSizeMarks = [
     }
 ]
 
+const simLengthMarks = [
+    {
+        value: 2000,
+        label: "2000"
+    },
+    {
+        value: 5000,
+        label: "5000"
+    },
+    {
+        value: 10000,
+        label: "10000"
+    }
+]
+
 const AddParamsMenu = (() => {
     const classes = useStyles()
 
+    //functions and global state from context API
     const {showParamMenu, addParamSet} = useContext(NeutralSimContext)
 
+    //state for addition of new parameter sets
     const [title, setTitle] = useState("")
     const [mutRate, setMutRate] = useState(0)
     const [popSize, setPopSize] = useState(500)
+    const [simLength, setSimLength] = useState(2000)
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -62,7 +80,7 @@ const AddParamsMenu = (() => {
         if(!title || !popSize){
             alert("Please supply values to all parameters.")
         }else{
-            addParamSet({title, mutRate, popSize})
+            addParamSet({title, mutRate, popSize, simLength})
 
             setTitle("")
         }
@@ -95,6 +113,17 @@ const AddParamsMenu = (() => {
                         valueLabelDisplay="auto"
                         onChangeCommitted={(e, value) => {setMutRate(value)}}
                     />
+                    <Typography>Number of Generations</Typography>
+                    <Slider
+                        min={2000}
+                        max={10000}
+                        defaultValue={2000}
+                        aria-labelledby="discrete-slider-custom"
+                        step={null}
+                        valueLabelDisplay="auto"
+                        marks={simLengthMarks}
+                        onChangeCommitted={(e, value) => {setSimLength(value)}}
+                    />              
                     {/* <input type="submit" value="Save Parameter Set" className="btn btn-block"/> */}
                     <Button className={classes.button} type="submit" color="secondary" variant="contained">
                         Add Parameter Set

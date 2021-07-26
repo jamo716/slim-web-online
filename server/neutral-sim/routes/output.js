@@ -71,7 +71,7 @@ router.post("/:id", async (req, res) => {
   paramSetToRun = paramSetToRun[0]
 
   //spawn a child process to run slim script with specified parameters
-  const child = spawn("slim", ["-d", `mutRate=${paramSetToRun.mutRate}`, "-d", `popSize=${paramSetToRun.popSize}`, "-d", `id=${parseInt(req.params.id)}`, "server/neutral-sim/slim-scripts/test.slim"])
+  const child = spawn("slim", ["-d", `mutRate=${paramSetToRun.mutRate}`, "-d", `popSize=${paramSetToRun.popSize}`, "-d", `id=${parseInt(req.params.id)}`, "-d", `simLength=${paramSetToRun.simLength}`, "server/neutral-sim/slim-scripts/test.slim"])
 
   //child process finishes
   child.on("exit", (code, signal) => {
@@ -101,6 +101,7 @@ router.post("/:id", async (req, res) => {
         title: paramSetToRun.title,
         popSize: paramSetToRun.popSize,
         mutRate: paramSetToRun.mutRate,
+        simLength: paramSetToRun.simLength,
         output: fileOutputs
       })
 

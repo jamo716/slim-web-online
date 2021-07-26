@@ -7,6 +7,7 @@ const outputSchema = new mongoose.Schema({
     title: { type: String, required: true },
     popSize: { type: Number, required: true },
     mutRate: { type: Number, required: true },
+    simLength: {type: Number, required: true},
     output: []
 });
 

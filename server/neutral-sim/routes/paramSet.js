@@ -28,7 +28,8 @@ router.post("/", (req, res) => {
     userID: parseInt(req.cookies.userID),
     title: req.body.title,
     mutRate: parseFloat(req.body.mutRate),
-    popSize: parseInt(req.body.popSize)
+    popSize: parseInt(req.body.popSize),
+    simLength: parseInt(req.body.simLength)
   })
 
   newParamSet.save()

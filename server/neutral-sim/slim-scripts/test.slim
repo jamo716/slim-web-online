@@ -15,6 +15,8 @@ initialize() {
 
 // create a population of 500 individuals
 1 {
+	//reschedule simulationFinished callback based on user input
+	sim.rescheduleScriptBlock(s1, start=simLength, end=simLength);
 	//make a directory to store output that is named with the id	
 	createDirectory(paste("/Users/jameson/Documents/GitHub/slim-web-online/server/neutral-sim/slim-output/" + asString(id)));
 	//path to read
@@ -35,6 +37,6 @@ initialize() {
 }
 
 // output samples of 10 genomes periodically, all fixed mutations at end
-2000 late() {
+s1 2000 late() {
 	sim.simulationFinished();
 }
