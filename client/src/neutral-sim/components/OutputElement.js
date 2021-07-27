@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import { NeutralSimContext } from "../context/NeutralSimContext"
 import Container from "@material-ui/core/Container"
 import Card from "@material-ui/core/Card"
@@ -8,7 +8,6 @@ import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
 import { makeStyles } from "@material-ui/core"
 import CsvDownloader from "react-csv-downloader"
-import Popover from '@material-ui/core/Popover'
 import IconButton from "@material-ui/core/IconButton"
 import DeleteOutlined from "@material-ui/icons/DeleteOutlined"
 
@@ -29,18 +28,6 @@ const OutputElement = (({output}) => {
     const {renderGraph, deleteOutput} = useContext(NeutralSimContext)
     const classes = useStyles()
 
-    const [anchorEl, setAnchorEl] = useState(null)
-
-    const handlePopoverOpen = (event) => {
-      setAnchorEl(event.currentTarget)
-    }
-  
-    const handlePopoverClose = () => {
-      setAnchorEl(null)
-    }
-  
-    const open = Boolean(anchorEl);
-
     const columns = [{
         id: 'generation',
         displayName: 'Generation'
@@ -55,10 +42,6 @@ const OutputElement = (({output}) => {
         <Container>
             <Card
                 className={classes.root}
-                aria-owns={open ? 'mouse-over-popover' : undefined}
-                aria-haspopup="true"
-                onMouseEnter={handlePopoverOpen}
-                onMouseLeave={handlePopoverClose}
             >
                 <CardHeader
                     action={
@@ -71,7 +54,7 @@ const OutputElement = (({output}) => {
                             <Typography variant="body1">
                                 {`${output.title}`}
                             </Typography>
-                            <Typography variant="body2">
+                            <Typography variant="overline">
                                 {`Run ${output.run}`}
                             </Typography>
                         </div>
@@ -92,29 +75,6 @@ const OutputElement = (({output}) => {
                 </CsvDownloader>
                 </CardActions>
             </Card>
-            
-            {/* popover text when hovering the output card */}
-            <Popover
-                id="mouse-over-popover"
-                className={classes.popover}
-                classes={{
-                paper: classes.paper,
-                }}
-                open={open}
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-                }}
-                transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-                }}
-                onClose={handlePopoverClose}
-                disableRestoreFocus
-            >
-                <Typography>{`Population Size: ${output.popSize} Mutation Rate: ${output.mutRate}`}</Typography>
-            </Popover>
         </Container>
     )
 })
