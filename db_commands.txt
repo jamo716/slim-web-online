@@ -1,0 +1,7 @@
+START COMMAND
+
+brew services start mongodb-community@5.0
+
+STOP COMMAND
+
+brew services stop mongodb-community@5.0
