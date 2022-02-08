@@ -1,10 +1,13 @@
 import express from "express"
 import cors from "cors"
+
 import outputRouter from "./neutral-sim/routes/output.js"
 import paramSetRouter from "./neutral-sim/routes/paramset.js"
 
 import paramsetRouterAM from "./assortative-mating/routes/paramset.js"
 import outputRouterAM from "./assortative-mating/routes/output.js"
+
+import paramsetRouterMut from "./mutation/routes/paramset.js"
 
 //MONGO CONNECTION STUFF FOR NOW
 
@@ -41,6 +44,10 @@ app.use("/api/neutralsim/paramset", paramSetRouter)
 //endpoints for assortative mating simulation
 app.use("/api/assortativemating/paramset", paramsetRouterAM)
 app.use("/api/assortativemating/output", outputRouterAM)
+
+//endpoints for mutation simulation
+app.use("/api/mutation/paramset", paramsetRouterMut)
+
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
