@@ -22,24 +22,6 @@ function NeutralSim() {
   const classes = useStyles()
 
     return (
-      // <NeutralSimProvider>
-      //   <div className="container">
-      //     <div className="input-output">
-      //       <div className="input">
-      //         <Header/>
-      //         <AddParamsMenu/>
-      //         <ParamSets/>
-      //       </div>
-      //       <div className="output">
-      //         <OutputList/>
-      //       </div>
-      //       <div className="output-chart">
-      //         <OutputChart/>
-      //       </div>
-      //     </div>
-      //   </div>
-      // </NeutralSimProvider>
-
       <NeutralSimProvider>
           <Grid container className={classes.root}>
             <Grid item xs={4} className={classes.input}>

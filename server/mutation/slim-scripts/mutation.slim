@@ -1,0 +1,97 @@
+initialize() {
+	initializeSLiMModelType("nonWF");
+	
+	// forward rate of mutation, A -> a - set by student
+	defineConstant("FORWARD_RATE", fr);
+	
+	// backward rate of mutation, a -> A - set by student
+	defineConstant("BACKWARD_RATE", br);
+	
+	initializeMutationRate(0);
+	
+	// A allele
+	initializeMutationType("m1", 0.5, "f", 1.0);
+	m1.convertToSubstitution = F;
+	m1.mutationStackPolicy = "l";
+	
+	//a allele	
+	initializeMutationType("m2", 0.5, "f", 1.0);
+	m2.convertToSubstitution = F;
+	m2.mutationStackPolicy = "l";
+
+	// 'haploid chromosome' with one locus
+	initializeGenomicElementType("g1", c(m1, m2), c(1.0, 1.0));
+	initializeGenomicElement(g1, 0, 0);
+	initializeRecombinationRate(0);
+}
+
+1 {
+
+	sim.rescheduleScriptBlock(s1, start=simLength, end=simLength);
+
+	//make a directory to store output that is named with the id	
+	createDirectory(paste("/Users/jameson/Documents/GitHub/slim-web-online/server/mutation/slim-output/" + asString(id)));
+
+	//path to read
+	path = paste("/Users/jameson/Documents/GitHub/slim-web-online/server/mutation/slim-output/" + asString(id));
+	setwd(path);
+
+	// initial frequency of A allele - set by student
+	p = pInit;
+	q = 1 - p;
+	
+	sim.addSubpop("p1", 1000);
+	
+	inds = p1.individuals;
+	
+	// alleles randomly assigned in proportion to initial frequencies
+	for(ind in inds){
+		ran = runif(1);
+		if(ran <= p){
+			ind.genome1.addNewDrawnMutation(m1, 0);	
+		}else{
+			ind.genome1.addNewDrawnMutation(m2, 0);			
+		}
+	}
+}
+
+late() {
+	sim.subpopulations.individuals.genome2.removeMutations();
+	
+	// individuals in simulation
+	inds = p1.individuals;	
+	
+	// loop through all individuals to check whether mutation occurs
+	for(ind in inds){
+		ran = runif(1);
+		
+		//individual has the A allele?
+		hasA = ind.countOfMutationsOfType(m1) ? T else F;	
+		
+		// mutate forward if random value is less than or equal to the forward rate and individual has A
+		// mutate backward if random value is less than or equal to the backward rate and invidual has a
+		if(hasA & ran <= FORWARD_RATE){
+			ind.genome1.removeMutations();
+			ind.genome1.addNewDrawnMutation(m2, 0);
+		}else if(!hasA & ran <= BACKWARD_RATE){
+			ind.genome1.removeMutations();
+			ind.genome1.addNewDrawnMutation(m1, 0);	
+		}
+	}	
+	
+	p = sum(inds.sumOfMutationsOfType(m1)) / size(inds);	
+	q = 1 - p;
+	
+	info = paste(c(sim.generation, p, q), sep=",");
+	writeFile("output.csv", info, append = T);	
+}
+
+fitness(m1) {
+	return 1.0;
+}
+
+fitness(m2) {
+	return 1.0;
+}
+
+s1 100 late() { sim.simulationFinished(); }

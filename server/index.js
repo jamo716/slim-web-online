@@ -8,6 +8,7 @@ import paramsetRouterAM from "./assortative-mating/routes/paramset.js"
 import outputRouterAM from "./assortative-mating/routes/output.js"
 
 import paramsetRouterMut from "./mutation/routes/paramset.js"
+import outputRouterMut from "./mutation/routes/output.js"
 
 //MONGO CONNECTION STUFF FOR NOW
 
@@ -47,6 +48,7 @@ app.use("/api/assortativemating/output", outputRouterAM)
 
 //endpoints for mutation simulation
 app.use("/api/mutation/paramset", paramsetRouterMut)
+app.use("/api/mutation/output", outputRouterMut)
 
 
 app.listen(PORT, () => {

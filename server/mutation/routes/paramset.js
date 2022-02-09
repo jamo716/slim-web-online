@@ -28,7 +28,7 @@ router.post("/", (req, res) => {
     userID: parseInt(req.cookies.userID),
     title: req.body.title,
     fr: parseFloat(req.body.fr),
-    br: parseInt(req.body.br),
+    br: parseFloat(req.body.br),
     pInit: parseFloat(req.body.pInit),
     simLength: parseInt(req.body.simLength)
   })
