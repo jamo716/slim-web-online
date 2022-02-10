@@ -7,6 +7,8 @@ import InfoCard from "./components/InfoCard"
 import NeutralImage from "./media/neutral.jpg"
 import AssortativeImage from "./media/assortative.jpg"
 import FillerImage from "./media/filler.jpg"
+import MutationImage from "./media/mutation.jpeg"
+import SelectionImage from "./media/selection.jpeg"
 
 const useStyles = makeStyles({
   root: {
@@ -28,15 +30,15 @@ const infoCards = [
     abstract: "A simulation that demonstrates how assortative mating increases genetic variance for a quantitative trait."
   },
   {
-    image: FillerImage,
-    path: "/",
-    title: "Third Simulation",
+    image: MutationImage,
+    path: "/mutation",
+    title: "Simple Mutation Model",
     abstract: "This is the abstract for another simulation"
   },
   {
-    image: FillerImage,
-    path: "/",
-    title: "Fourth Simulation",
+    image: SelectionImage,
+    path: "/selection",
+    title: "Simple Selection Model",
     abstract: "This is the abstract for another simulation"
   },
   {

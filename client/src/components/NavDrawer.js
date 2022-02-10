@@ -68,6 +68,16 @@ export const NavDrawer = ({children}) => {
             icon: <ComputerIcon color="primary"/>,
             path: "/assortativemating"
         },
+        {
+            text: "Simple Mutation Model",
+            icon: <ComputerIcon color="primary"/>,
+            path: "/mutation"
+        },
+        {
+            text: "Simple Selection Model",
+            icon: <ComputerIcon color="primary"/>,
+            path: "/selection"
+        },
     ]
 
     return (
