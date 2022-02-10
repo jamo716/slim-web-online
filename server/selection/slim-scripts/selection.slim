@@ -1,0 +1,160 @@
+// set up a simple neutral simulation
+initialize() {
+	// p initial - starting frequency of allele A - will be supplied by student
+	defineConstant("p0", pInit);
+	
+	// q initial - starting frequency of allele a - will be supplied by student
+	defineConstant("q0", 1 - p0);
+	
+	// dominance coefficient - supplied by student
+	defineConstant("dom", h);
+	
+	// selection coefficient - supplied by student
+	defineConstant("sel", s);
+	
+	//non-Wright-Fisher assumptions - individuals never reproduce but allele frequencies shift
+	initializeSLiMModelType("nonWF");
+	
+	//mutations are always drawn explicitly, no background mutation
+	initializeMutationRate(0);
+	
+	// A allele - boring config SLiM stuff
+	initializeMutationType("m1", 0.5, "f", 1.0);
+	m1.convertToSubstitution = F;
+	m1.mutationStackPolicy = "l";
+	
+	// a allele - boring config SLiM stuff
+	initializeMutationType("m2", 0.5, "f", -1.0);
+	m2.convertToSubstitution = F;
+	m2.mutationStackPolicy = "l";
+
+	// 'diploid chromosome' with one locus
+	initializeGenomicElementType("g1", c(m1, m2), c(1.0, 1.0));
+	initializeGenomicElement(g1, 0, 0);
+	initializeRecombinationRate(0);
+}
+
+// setup in first generation
+1 {
+	sim.rescheduleScriptBlock(s1, start=simLength, end=simLength);
+
+	createDirectory(paste("/Users/jameson/Documents/GitHub/slim-web-online/server/selection/slim-output/" + asString(id)));
+
+path = paste("/Users/jameson/Documents/GitHub/slim-web-online/server/selection/slim-output/" + asString(id));
+	setwd(path);
+	
+	// create a population of 1000 individuals - may be supplied by student
+	sim.addSubpop("p1", 1000);
+	
+	// reference to all individuals in the population
+	inds = p1.individuals;
+	
+	// assign A/a alleles randomly in proportion to p0 and q0
+	for(ind in inds){
+	
+		// random number for genome 1
+		ranOne = runif(1);
+		
+		//random number for genome 2
+		ranTwo = runif(1);	
+		
+		//random allele assigned to genome 1 
+		if(ranOne <= p0){
+			ind.genome1.addNewDrawnMutation(m1, 0);	
+		}else{
+			ind.genome1.addNewDrawnMutation(m2, 0);			
+		}
+		
+		//random allele assigned to genome 2 
+		if(ranTwo <= p0){
+			ind.genome2.addNewDrawnMutation(m1, 0);	
+		}else{
+			ind.genome2.addNewDrawnMutation(m2, 0);			
+		}
+	}
+}
+
+ late() {
+	// manipulating SLiM for haploid model
+	// sim.subpopulations.individuals.genome2.removeMutations();
+	
+	// reference to all individuals in the population
+	inds = p1.individuals;
+	
+	// calculate p (frequency of A allele) and q (frequence of a allele)
+	p = sum(inds.sumOfMutationsOfType(m1)) / (2 * size(inds));
+	q = 1 - p;
+	
+	//genotype frequencies
+	p_2 = 0;
+	pq = 0;
+	q_2 = 0;
+	
+	for(ind in inds){
+		if(ind.sumOfMutationsOfType(m1) == 2){
+			p_2 = p_2 + 1;		
+		}else if(ind.sumOfMutationsOfType(m1) == 1){
+			pq = pq + 1;		
+		}	
+	}
+	
+	p_2 = p_2 / p1.individualCount;
+	pq = pq / p1.individualCount;
+	q_2 = 1 - p_2 - pq;
+	
+	//mean fitness of population
+	w = (1 - 2 * pq * dom * sel - q_2 * sel);
+	
+	// change in A allele equation setup - delta p (dP)
+	K1 = 1 - dom - p * (1 - 2 * dom);
+	K2 = 1 - q * (1 - p * (1 - 2 * dom)) * sel;
+	dP = (p*q*K1*sel) / K2;
+	
+	//output
+	
+	info = paste(c(sim.generation, p, q, p_2, pq, q_2, w), sep=",");
+	writeFile("output.csv", info, append = T);		
+	
+	// frequency of A allele in next generation
+	p = p + dP;
+	
+	// more SLiM manipulation
+	sim.subpopulations.individuals.genome1.removeMutations();	
+	sim.subpopulations.individuals.genome2.removeMutations();	
+	
+	// assign A/a alleles randomly in proportion to new frequencies of A and a
+	for(ind in inds){
+		
+		// random number for genome 1
+		ranOne = runif(1);
+		
+		//random number for genome 2
+		ranTwo = runif(1);	
+		
+		//randomly assign allele for genome 1
+		if(ranOne <= p){
+			ind.genome1.addNewDrawnMutation(m1, 0);	
+		}else{
+			ind.genome1.addNewDrawnMutation(m2, 0);			
+		}
+		
+		//randomly assign allele for genome 1
+		if(ranTwo <= p){
+			ind.genome2.addNewDrawnMutation(m1, 0);	
+		}else{
+			ind.genome2.addNewDrawnMutation(m2, 0);			
+		}
+	}
+}
+
+// SliM manipulation
+fitness(m1) {
+	return 1.0;
+}
+
+//SLiM manipulation
+fitness(m2) {
+	return 1.0;
+}
+
+s1 100 late() { sim.simulationFinished(); }
