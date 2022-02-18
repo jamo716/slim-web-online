@@ -39,7 +39,7 @@ const rateMarks = [
     },
     {
         value: 0.3,
-        label: "0.4"
+        label: "0.3"
     },
     {
         value: 0.4,
