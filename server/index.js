@@ -13,6 +13,9 @@ import outputRouterMut from "./mutation/routes/output.js"
 import paramsetRouterSel from "./selection/routes/paramset.js"
 import outputRouterSel from "./selection/routes/output.js"
 
+import paramsetRouterMutSel from "./mut-sel-balance/routes/paramset.js"
+import outputRouterMutSel from "./mut-sel-balance/routes/output.js"
+
 //MONGO CONNECTION STUFF FOR NOW
 
 import mongoose from "mongoose"
@@ -56,6 +59,10 @@ app.use("/api/mutation/output", outputRouterMut)
 //endpoints for selection simulation
 app.use("/api/selection/paramset", paramsetRouterSel)
 app.use("/api/selection/output", outputRouterSel)
+
+//endpoints for mutation selection simulation
+app.use("/api/mutationselection/paramset", paramsetRouterMutSel)
+app.use("/api/mutationselection/output", outputRouterMutSel)
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);

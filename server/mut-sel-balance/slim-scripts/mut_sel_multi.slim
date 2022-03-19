@@ -1,0 +1,254 @@
+// set up a simple neutral simulation
+initialize() {
+	// p initial - starting frequency of allele A - will be supplied by student
+	defineConstant("p0", pInit);
+	
+	// q initial - starting frequency of allele a - will be supplied by student
+	defineConstant("q0", 1 - p0);
+	
+	// dominance coefficient - supplied by student
+	defineConstant("h", dom);
+	
+	// selection coefficient - supplied by student
+	defineConstant("s", sel);
+	
+	// forward rate of mutation, A -> a - set by student
+	defineConstant("FORWARD_RATE", fr);
+	
+	// backward rate of mutation, a -> A - set by student
+	defineConstant("BACKWARD_RATE", br);
+	
+	// number of loci being simulated
+	defineConstant("N_LOCI", 5);
+	
+	//non-Wright-Fisher assumptions - individuals never reproduce but allele frequencies shift
+	initializeSLiMModelType("nonWF");
+	
+	//mutations are always drawn explicitly, no background mutation
+	initializeMutationRate(0);
+	
+	// A allele - boring config SLiM stuff
+	initializeMutationType("m1", 0.5, "f", 1.0);
+	m1.convertToSubstitution = F;
+	m1.mutationStackPolicy = "l";
+	
+	// a allele - boring config SLiM stuff
+	initializeMutationType("m2", 0.5, "f", 1.0);
+	m2.convertToSubstitution = F;
+	m2.mutationStackPolicy = "l";
+	
+	// 'haploid chromosome' with one locus
+	initializeGenomicElementType("g1", c(m1, m2), c(1.0, 1.0));
+	initializeGenomicElement(g1, 0, N_LOCI - 1);
+	initializeRecombinationRate(0);
+}
+
+// setup in first generation
+1 {
+	sim.rescheduleScriptBlock(s1, start=simLength, end=simLength);
+
+	// create a population of 1000 individuals - may be supplied by student
+	sim.addSubpop("p1", popSize);
+	
+	// reference to all individuals in the population
+	inds = p1.individuals;
+	
+	// assign A/a alleles randomly in proportion to p0 and q0
+	for(ind in inds){
+		for(locus in 0:(N_LOCI - 1)){
+			// random number for genome 1
+			ranOne = runif(1);
+			
+			//random number for genome 2
+			ranTwo = runif(1);
+			
+			//random allele assigned to genome 1 
+			if(ranOne <= p0){
+				ind.genome1.addNewDrawnMutation(m1, locus);
+			}else{
+				ind.genome1.addNewDrawnMutation(m2, locus);
+			}
+			
+			//random allele assigned to genome 2 
+			if(ranTwo <= p0){
+				ind.genome2.addNewDrawnMutation(m1, locus);
+			}else{
+				ind.genome2.addNewDrawnMutation(m2, locus);
+			}
+		}
+	}
+	
+//	//frequency file with headers
+//	x = (1:N_LOCI);
+//	headers = c();	
+//	
+//	for(element in x){
+//		headers = c(headers, paste0("p", asString(element), ",q", asString(element)));
+//	}
+	
+	//make a directory to store output that is named with the id	
+	createDirectory(paste("/Users/jameson/Documents/GitHub/slim-web-online/server/mut-sel-balance/slim-output/" + asString(id)));
+
+	//path to read
+	path = paste("/Users/jameson/Documents/GitHub/slim-web-online/server/mut-sel-balance/slim-output/" + asString(id));
+	setwd(path);
+	
+//	info = paste(c("Generation", headers, "Mean Fitness", "Mean Count of Deleterious Mutations", "Mean Frequency of Deleterious Mutations", "Mean Count of Shared Variants", "Mean Count of Unique Variants"), sep=",");
+//	writeFile("output.csv", info, append = F);
+}
+	
+
+late() {
+	// reference to all individuals in the population
+	inds = p1.individuals;
+	
+	//vector to hold frequencies of deleterious allele a
+	delFreqs = c();
+	
+	//vector to hold mean fitnesses
+	meanFits = c();
+	
+	//vector to hold frequencies of all loci in order p1/q1/p2/q2/etc
+	freqs = c();
+	
+	for(locus in 0:(N_LOCI - 1)){
+		// calculate p (frequency of A allele) and q (frequence of a allele)
+		p = sum(inds.genomes.containsMarkerMutation(m1, locus)) / (2 * p1.individualCount);
+		q = 1 - p;
+		
+		if(p != 1){
+			// change in A allele equation setup - delta p (dP)
+			K1 = 1 - h - p * (1 - 2 * h);
+			K2 = 1 - q * (1 - p * (1 - 2 * h)) * s;
+			dP = (p*q*K1*s) / K2;
+			
+			// frequency of A allele in next generation
+			p = p + dP;
+			
+			// more SLiM manipulation
+			inds.genomes.removeMutations(inds.genomes.containsMarkerMutation(m1, locus, T));
+			inds.genomes.removeMutations(inds.genomes.containsMarkerMutation(m2, locus, T));
+			
+			// assign A/a alleles randomly in proportion to new frequencies of A and a
+			for(ind in inds){
+				
+				// random number for genome 1
+				ranOne = runif(1);
+				
+				//random number for genome 2
+				ranTwo = runif(1);
+				
+				//randomly assign allele for genome 1
+				if(ranOne <= p){
+					ind.genome1.addNewDrawnMutation(m1, locus);
+				}else{
+					ind.genome1.addNewDrawnMutation(m2, locus);
+				}
+				
+				//randomly assign allele for genome 2
+				if(ranTwo <= p){
+					ind.genome2.addNewDrawnMutation(m1, locus);
+				}else{
+					ind.genome2.addNewDrawnMutation(m2, locus);
+				}
+			}
+		}
+		
+		// loop through all individuals to check whether mutation occurs
+		for(ind in inds){
+			ranOne = runif(1);
+			ranTwo = runif(1);
+			
+			//individual has the A allele?
+			hasAOne = ind.genome1.containsMarkerMutation(m1, locus) ? T else F;
+			hasATwo = ind.genome2.containsMarkerMutation(m1, locus) ? T else F;
+			
+			// mutate forward if random value is less than or equal to the forward rate and individual has A
+			// mutate backward if random value is less than or equal to the backward rate and invidual has a
+			if(hasAOne & ranOne <= FORWARD_RATE){
+				ind.genome1.removeMutations(ind.genome1.containsMarkerMutation(m1, locus, T));
+				ind.genome1.addNewDrawnMutation(m2, locus);
+			}else if(!hasAOne & ranOne <= BACKWARD_RATE){
+				ind.genome1.removeMutations(ind.genome1.containsMarkerMutation(m2, locus, T));
+				ind.genome1.addNewDrawnMutation(m1, locus);
+			}
+			
+			if(hasATwo & ranTwo <= FORWARD_RATE){
+				ind.genome2.removeMutations(ind.genome2.containsMarkerMutation(m1, locus, T));
+				ind.genome2.addNewDrawnMutation(m2, locus);
+			}else if(!hasATwo & ranTwo <= BACKWARD_RATE){
+				ind.genome2.removeMutations(ind.genome2.containsMarkerMutation(m2, locus, T));
+				ind.genome2.addNewDrawnMutation(m1, locus);
+			}
+		}
+		
+		// re-calculate p (frequency of A allele) after mutation
+		p = sum(inds.genomes.containsMarkerMutation(m1, locus)) / (2 * p1.individualCount);
+		q = 1 - p;
+		
+		//adding current allele frequencies to vector of frequencies
+		freqs = c(freqs, asString(p), asString(q));
+		
+		//mean fitness of population for this locus
+		w = (1 - 2 * p*q * h * s - q^2 * s);	
+		
+		delFreqs = c(delFreqs, q);
+		meanFits = c(meanFits, w);
+	}
+	
+	//mean and SD of frequency of a allele
+	avgFreq = mean(delFreqs);
+	varFreq = var(delFreqs);
+	
+	//average count of a allele within each individual
+	avgCount = sum(inds.genomes.sumOfMutationsOfType(m2)) / p1.individualCount;
+	varCount = var(inds.genomes.sumOfMutationsOfType(m2));
+	
+	//mean fitness product across all loci
+	product = 1;
+	
+	for(value in meanFits){
+		product = product * value;
+	}
+	
+	//sample 100 pairs of individuals and calculate number of shared and unique mutations at each locus on genome 1
+	sampledInds = sample(inds, 200);
+	shared = c();
+	unique = c();
+	
+	for(i in 0:99){
+		ind1 = sampledInds[i];
+		ind2 = sampledInds[100+i];
+		
+		sharedCount = 0;
+		uniqueCount = 0;
+		
+		for(locus in 0:(N_LOCI - 1)){
+			if(ind1.genome1.containsMarkerMutation(m2, locus) & ind2.genome1.containsMarkerMutation(m2, locus)){
+				sharedCount = sharedCount + 1;			
+			}else if(ind1.genome1.containsMarkerMutation(m1, locus) & ind2.genome1.containsMarkerMutation(m2, locus)){
+				uniqueCount = uniqueCount + 1;			
+			}else if(ind1.genome1.containsMarkerMutation(m2, locus) & ind2.genome1.containsMarkerMutation(m1, locus)){
+				uniqueCount = uniqueCount + 1;			
+			}			
+		}
+		shared = c(shared, sharedCount);
+		unique = c(unique, uniqueCount);	
+	}
+	
+	//all file writes
+	info = paste(c(sim.generation, freqs, product, avgCount, avgFreq, mean(shared), mean(unique)), sep = ",");
+	writeFile("output.csv", info, append = T);
+}
+
+// SliM manipulation
+fitness(m1) {
+	return 1.0;
+}
+
+//SLiM manipulation
+fitness(m2) {
+	return 1.0;
+}
+
+s1 100 late() { sim.simulationFinished(); }
