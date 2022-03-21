@@ -1,12 +1,12 @@
 import React from "react"
-import {SelectionProvider} from "./context/SelectionContext"
+import {MutationSelectionProvider} from "./context/MutationSelectionContext"
 import { makeStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid"
 import Header from "./components/Header"
 import AddParamsMenu from "./components/AddParamsMenu";
 import ParamSets from "./components/ParamSets";
-import OutputList from "./components/OutputList"
-import OutputChart from "./components/OutputChart";
+import OutputList from "./components/OutputList";
+import OutputChart from "./components/OutputChart"
 
 const useStyles = makeStyles({
     root: {
@@ -16,11 +16,11 @@ const useStyles = makeStyles({
     }
   })
 
-function Selection() {
+function MutationSelection() {
     const classes = useStyles();
 
     return (
-      <SelectionProvider>
+      <MutationSelectionProvider>
         <Grid container className={classes.root}>
           <Grid item xs={4} className={classes.input}>
               <Header/>
@@ -34,8 +34,8 @@ function Selection() {
               <OutputChart/>
             </Grid>
         </Grid>
-      </SelectionProvider>
+      </MutationSelectionProvider>
     );
 }
 
-export default Selection
+export default MutationSelection

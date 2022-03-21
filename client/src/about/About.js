@@ -43,8 +43,8 @@ const infoCards = [
   },
   {
     image: FillerImage,
-    path: "/",
-    title: "Fifth Simulation",
+    path: "/mutationselection",
+    title: "Mutation-Selection Balance",
     abstract: "This is the abstract for another simulation"
   },
   {
