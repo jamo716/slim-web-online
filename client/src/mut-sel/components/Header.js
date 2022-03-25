@@ -17,7 +17,7 @@ const Header = (() => {
     return(
         <Container >
             <header className="header">
-                    <Typography variant="h5">Selection Simulation</Typography>
+                    <Typography variant="h5">Mutation Selection Balance Simulation</Typography>
                     <IconButton color="primary" onClick={() => history.push("/")}>
                         <HelpIcon fontSize="large"/>
                     </IconButton>

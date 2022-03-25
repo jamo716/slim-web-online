@@ -49,6 +49,32 @@ path = paste("/Users/jameson/Documents/GitHub/slim-web-online/server/selection/s
 	// reference to all individuals in the population
 	inds = p1.individuals;
 	
+	p = p0;
+	q = 1 - p;
+	
+	//genotype frequencies
+	p_2 = 0;
+	pq = 0;
+	q_2 = 0;
+	
+	for(ind in inds){
+		if(ind.sumOfMutationsOfType(m1) == 2){
+			p_2 = p_2 + 1;		
+		}else if(ind.sumOfMutationsOfType(m1) == 1){
+			pq = pq + 1;		
+		}	
+	}
+	
+	p_2 = p_2 / p1.individualCount;
+	pq = pq / p1.individualCount;
+	q_2 = 1 - p_2 - pq;
+	
+	//mean fitness of population
+	w = (1 - 2 * pq * dom * sel - q_2 * sel);
+	
+	info = paste(c(sim.generation, p, q, p_2, pq, q_2, w), sep=",");
+	writeFile("output.csv", info, append = T);	
+	
 	// assign A/a alleles randomly in proportion to p0 and q0
 	for(ind in inds){
 	

@@ -40,6 +40,9 @@ initialize() {
 	p = pInit;
 	q = 1 - p;
 	
+	info = paste(c(asString(0), p, q), sep=",");
+	writeFile("output.csv", info, append = T);	
+	
 	sim.addSubpop("p1", 1000);
 	
 	inds = p1.individuals;
