@@ -11,6 +11,9 @@ import { makeStyles } from '@material-ui/core';
 import Slider from "@material-ui/core/Slider"
 import Typography from "@material-ui/core/Typography"
 import Button from "@material-ui/core/Button"
+import Select from "@material-ui/core/Select"
+import { MenuItem } from "@material-ui/core";
+import { FormControl } from "@material-ui/core";
 
 const useStyles = makeStyles({
     field: {
@@ -23,6 +26,49 @@ const useStyles = makeStyles({
         marginBottom: 20
     }
 })
+
+const rateMarksMut = [
+    {
+        value: 0,
+        label: '0',
+    },
+    {
+        value: 1e-9,
+        label: '1e-9',
+    },
+    {
+        value: 1e-8,
+        label: '1e-8',
+    },
+    {
+        value: 1e-7,
+        label: '1e-7',
+    },
+    {
+        value: 1e-6,
+        label: '1e-6',
+    },
+    {
+        value: 1e-5,
+        label: '1e-5',
+    },
+    {
+        value: 1e-4,
+        label: '1e-4',
+    },
+    {
+        value: 1e-3,
+        label: '1e-3',
+    },
+    {
+        value: 1e-2,
+        label: "1e-2"
+    },
+    {
+        value: 1,
+        label: "1"
+    }
+]
 
 const rateMarks = [
     {
@@ -98,8 +144,20 @@ const simLengthMarks = [
     {
         value: 30,
         label: "30"
+    },
+    {
+        value: 50,
+        label: "50"
+    },
+    {
+        value: 100,
+        label: "100"
     }
 ]
+
+function calculateValue(value) {
+    return 10 ** -value;
+  }
 
 const AddParamsMenu = (() => {
     const classes = useStyles()
@@ -111,11 +169,13 @@ const AddParamsMenu = (() => {
     const [title, setTitle] = useState("")
     const [h, setH] = useState(0)
     const [s, setS] = useState(0)
-    const [fr, setFr] = useState(0)
+    const [fr, setFr] = useState(0.000001)
     const [br, setBr] = useState(0)
     const [pInit, setPInit] = useState(0)
     const [popSize, setPopSize] = useState(500)
     const [simLength, setSimLength] = useState(10)
+
+    console.log(fr);
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -128,6 +188,14 @@ const AddParamsMenu = (() => {
             setTitle("")
         }
     }
+
+    const handleChangeFr = (event) => {
+        setFr(event.target.value);
+      };
+
+      const handleChangeBr = (event) => {
+        setBr(event.target.value);
+      };
 
     return(
         <Container>
@@ -167,28 +235,50 @@ const AddParamsMenu = (() => {
                         marks={rateMarks}
                         onChangeCommitted={(e, value) => {setS(value)}}
                     />
+                    <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                     <Typography>Forward Rate of Mutation</Typography>
-                    <Slider
-                        min={0}
-                        max={1}
-                        defaultValue={0}
-                        aria-labelledby="discrete-slider-custom"
-                        step={null}
-                        valueLabelDisplay="auto"
-                        marks={rateMarks}
-                        onChangeCommitted={(e, value) => {setFr(value)}}
-                    />                    
-                    <Typography>Backward Rate of Mutation</Typography>
-                    <Slider
-                        min={0}
-                        max={1}
-                        defaultValue={0}
-                        aria-labelledby="discrete-slider-custom"
-                        step={null}
-                        valueLabelDisplay="auto"
-                        marks={rateMarks}
-                        onChangeCommitted={(e, value) => {setBr(value)}}
-                    />
+                        <Select
+                            defaultValue={0.000001}
+                            labelId="demo-simple-select-standard-label"
+                            id="demo-simple-select-standard"
+                            value={fr}
+                            onChange={handleChangeFr}
+                            label="Forward Rate of Mutation"
+                            >
+                            <MenuItem value="">
+                                <em>None</em>
+                            </MenuItem>
+                            <MenuItem value={0.000001}>0.000001</MenuItem>
+                            <MenuItem value={0.00001}>0.00001</MenuItem>
+                            <MenuItem value={0.0001}>0.0001</MenuItem>
+                            <MenuItem value={0.001}>0.001</MenuItem>
+                            <MenuItem value={0.01}>0.01</MenuItem>
+                            <MenuItem value={0.1}>0.1</MenuItem>
+                            <MenuItem value={0.5}>0.5</MenuItem>
+                            <MenuItem value={1}>1</MenuItem>
+                        </Select>
+                        <Typography>Backward Rate of Mutation</Typography>
+                        <Select
+                            defaultValue={0.000001}
+                            labelId="demo-simple-select-standard-label"
+                            id="demo-simple-select-standard"
+                            value={br}
+                            onChange={handleChangeBr}
+                            label="Forward Rate of Mutation"
+                            >
+                            <MenuItem value="">
+                                <em>None</em>
+                            </MenuItem>
+                            <MenuItem value={0.000001}>0.000001</MenuItem>
+                            <MenuItem value={0.00001}>0.00001</MenuItem>
+                            <MenuItem value={0.0001}>0.0001</MenuItem>
+                            <MenuItem value={0.001}>0.001</MenuItem>
+                            <MenuItem value={0.01}>0.01</MenuItem>
+                            <MenuItem value={0.1}>0.1</MenuItem>
+                            <MenuItem value={0.5}>0.5</MenuItem>
+                            <MenuItem value={1}>1</MenuItem>
+                        </Select>
+                    </FormControl>
                     <Typography>Population Size</Typography>
                     <Slider
                         min={500}
@@ -203,7 +293,7 @@ const AddParamsMenu = (() => {
                     <Typography>Number of Generations</Typography>
                     <Slider
                         min={10}
-                        max={30}
+                        max={100}
                         defaultValue={10}
                         aria-labelledby="discrete-slider-custom"
                         step={null}
