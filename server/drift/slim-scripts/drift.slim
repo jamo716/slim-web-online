@@ -1,0 +1,85 @@
+// set up a simple neutral simulation
+initialize() {
+	//population size
+	defineConstant("N", popSize);
+	
+	initializeMutationRate(0);
+	
+	// m1 mutation type: neutral
+	initializeMutationType("m1", 0.5, "f", 0.0);
+	m1.convertToSubstitution = F;
+	
+	// g1 genomic element type: uses m1 for all mutations
+	initializeGenomicElementType("g1", m1, 1.0);
+	
+	// uniform chromosome of length 100 kb with uniform recombination
+	initializeGenomicElement(g1, 0, 0);
+	initializeRecombinationRate(0);
+}
+
+1 {
+	sim.rescheduleScriptBlock(s1, start=simLength, end=simLength);
+	
+	//make a directory to store output that is named with the id	
+	createDirectory(paste("/Users/jameson/Documents/GitHub/slim-web-online/server/drift/slim-output/" + asString(id)));
+	
+	//path to read
+	path = paste("/Users/jameson/Documents/GitHub/slim-web-online/server/drift/slim-output/" + asString(id));
+	setwd(path);
+
+	sim.addSubpop("p1", N);
+	
+	// reference to all individuals in the population
+	inds = p1.individuals;
+	
+	for(ind in inds){
+		ind.genome1.addNewMutation(m1, 0, 0);
+		ind.genome2.addNewMutation(m1, 0, 0);
+		
+		ind.genome1.containsMarkerMutation(m1, 0, T).tag = ind.index;
+		ind.genome2.containsMarkerMutation(m1, 0, T).tag = (ind.index + 1000); 
+	}
+	
+	//generation, fExp, fEst, alleleFr
+	info = paste(c(sim.generation, 0, 0, (1/(2*p1.individualCount))), sep=",");
+	writeFile("output.csv", info, append = F);
+}
+
+2: {
+	inds = p1.individuals;
+	
+	//estimating F
+	
+	sameCount = 0;	
+	
+	for(i in 1:1000){
+		muts = sample(inds.genomes.mutations, 2);
+	
+		if(muts[0].tag == muts[1].tag){
+			sameCount = sameCount + 1; 	
+		}
+	}
+	
+	//estimated value of F
+	fEst = sameCount/1000;	
+	
+	//expected value of F
+	fExp = 1 - (1 - 1/(2*p1.individualCount))^(sim.generation-1);
+	
+	//frequency of first allele
+	muts = inds.genomes.mutations;
+	sorted = size(which(muts.tag == 0));
+	
+	alleleFreq = sorted / (2 * p1.individualCount);	
+	
+	//generation, fExp, fEst, alleleFr
+	info = paste(c(sim.generation, fExp, fEst, alleleFreq), sep=",");
+	writeFile("output.csv", info, append = T);	
+	
+	print((alleleFreq));
+	
+	print("Expected F: " + fExp);
+	print("Estimated F: " + fEst);
+}
+
+s1 100 late() { sim.simulationFinished(); }

@@ -27,48 +27,48 @@ const useStyles = makeStyles({
     }
 })
 
-const rateMarksMut = [
-    {
-        value: 0,
-        label: '0',
-    },
-    {
-        value: 1e-9,
-        label: '1e-9',
-    },
-    {
-        value: 1e-8,
-        label: '1e-8',
-    },
-    {
-        value: 1e-7,
-        label: '1e-7',
-    },
-    {
-        value: 1e-6,
-        label: '1e-6',
-    },
-    {
-        value: 1e-5,
-        label: '1e-5',
-    },
-    {
-        value: 1e-4,
-        label: '1e-4',
-    },
-    {
-        value: 1e-3,
-        label: '1e-3',
-    },
-    {
-        value: 1e-2,
-        label: "1e-2"
-    },
-    {
-        value: 1,
-        label: "1"
-    }
-]
+// const rateMarksMut = [
+//     {
+//         value: 0,
+//         label: '0',
+//     },
+//     {
+//         value: 1e-9,
+//         label: '1e-9',
+//     },
+//     {
+//         value: 1e-8,
+//         label: '1e-8',
+//     },
+//     {
+//         value: 1e-7,
+//         label: '1e-7',
+//     },
+//     {
+//         value: 1e-6,
+//         label: '1e-6',
+//     },
+//     {
+//         value: 1e-5,
+//         label: '1e-5',
+//     },
+//     {
+//         value: 1e-4,
+//         label: '1e-4',
+//     },
+//     {
+//         value: 1e-3,
+//         label: '1e-3',
+//     },
+//     {
+//         value: 1e-2,
+//         label: "1e-2"
+//     },
+//     {
+//         value: 1,
+//         label: "1"
+//     }
+// ]
 
 const rateMarks = [
     {
@@ -155,9 +155,9 @@ const simLengthMarks = [
     }
 ]
 
-function calculateValue(value) {
-    return 10 ** -value;
-  }
+// function calculateValue(value) {
+//     return 10 ** -value;
+//   }
 
 const AddParamsMenu = (() => {
     const classes = useStyles()

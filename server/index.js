@@ -16,6 +16,9 @@ import outputRouterSel from "./selection/routes/output.js"
 import paramsetRouterMutSel from "./mut-sel-balance/routes/paramset.js"
 import outputRouterMutSel from "./mut-sel-balance/routes/output.js"
 
+import paramsetRouterDrift from "./drift/routes/paramset.js"
+import outputRouterDrift from "./drift/routes/output.js"
+
 //MONGO CONNECTION STUFF FOR NOW
 
 import mongoose from "mongoose"
@@ -63,6 +66,10 @@ app.use("/api/selection/output", outputRouterSel)
 //endpoints for mutation selection simulation
 app.use("/api/mutationselection/paramset", paramsetRouterMutSel)
 app.use("/api/mutationselection/output", outputRouterMutSel)
+
+//endpoints for drift simulation
+app.use("/api/drift/paramset", paramsetRouterDrift)
+app.use("/api/drift/output", outputRouterDrift)
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
