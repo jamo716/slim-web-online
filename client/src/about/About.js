@@ -9,6 +9,7 @@ import AssortativeImage from "./media/assortative.jpg"
 import FillerImage from "./media/filler.jpg"
 import MutationImage from "./media/mutation.jpeg"
 import SelectionImage from "./media/selection.jpeg"
+import BalanceImage from "./media/balance.jpeg"
 
 const useStyles = makeStyles({
   root: {
@@ -42,15 +43,15 @@ const infoCards = [
     abstract: "This is the abstract for another simulation"
   },
   {
-    image: FillerImage,
+    image: BalanceImage,
     path: "/mutationselection",
     title: "Mutation-Selection Balance",
     abstract: "This is the abstract for another simulation"
   },
   {
     image: FillerImage,
-    path: "/",
-    title: "Sixth Simulation",
+    path: "/drift",
+    title: "Genetic Drift",
     abstract: "This is the abstract for another simulation"
   }
 ]

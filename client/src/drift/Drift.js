@@ -1,0 +1,37 @@
+import React from "react"
+import { makeStyles } from "@material-ui/core";
+import {DriftProvider} from "./context/DriftContext"
+import Grid from "@material-ui/core/Grid"
+import Header from "./components/Header"
+import AddParamsMenu from "./components/AddParamsMenu";
+import ParamSets from "./components/ParamSets";
+import OutputList from "./components/OutputList"
+
+const useStyles = makeStyles({
+    root: {
+      marginTop: 30,
+      marginBottom: 200,
+      marginLeft: 10
+    }
+  })
+
+function Drift() {
+    const classes = useStyles();
+    return (
+        <DriftProvider>
+            <Grid container className={classes.root}>
+                <Grid item xs={4} className={classes.input}>
+                    <Header/>
+                    <AddParamsMenu/>
+                    <ParamSets/>
+                </Grid>
+                <Grid item xs={4}>
+                    <OutputList/>
+                </Grid>
+            </Grid>
+        </DriftProvider>
+      
+    );
+}
+
+export default Drift

@@ -6,6 +6,7 @@ import Mutation from "./mutation/Mutation"
 import Selection from "./selection/Selection"
 import MutationSelection from "./mut-sel/MutationSelection"
 import AssortativeMating from "./assortative-mating/AssortativeMating";
+import Drift from "./drift/Drift"
 import About from "./about/About"
 import NavDrawer from "./components/NavDrawer";
 import Cookies from "js-cookie"
@@ -45,6 +46,7 @@ function App() {
             <Route path="/mutation" component={Mutation}/>
             <Route path="/selection" component={Selection}/>
             <Route path="/mutationselection" component={MutationSelection}/>
+            <Route path="/drift" component={Drift}/>
             <Route path="/" exact component={About}/>
           </Switch>
         {/* </NavDrawer> */}
