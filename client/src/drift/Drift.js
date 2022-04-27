@@ -6,6 +6,7 @@ import Header from "./components/Header"
 import AddParamsMenu from "./components/AddParamsMenu";
 import ParamSets from "./components/ParamSets";
 import OutputList from "./components/OutputList"
+import OutputChart from "./components/OutputChart"
 
 const useStyles = makeStyles({
     root: {
@@ -27,6 +28,9 @@ function Drift() {
                 </Grid>
                 <Grid item xs={4}>
                     <OutputList/>
+                </Grid>
+                <Grid item xs={4}>
+                    <OutputChart/>
                 </Grid>
             </Grid>
         </DriftProvider>

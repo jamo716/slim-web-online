@@ -32,7 +32,7 @@ function MutationSelection() {
           </Grid>
           <Grid item xs={4}>
               <OutputChart/>
-            </Grid>
+          </Grid>
         </Grid>
       </MutationSelectionProvider>
     );
