@@ -53,20 +53,20 @@ const simLengthMarks = [
         label: "10"
     },
     {
-        value: 20,
-        label: "20"
-    },
-    {
-        value: 30,
-        label: "30"
-    },
-    {
         value: 50,
         label: "50"
     },
     {
         value: 100,
         label: "100"
+    },
+    {
+        value: 250,
+        label: "250"
+    },
+    {
+        value: 500,
+        label: "500"
     }
 ]
 
@@ -117,7 +117,7 @@ const AddParamsMenu = (() => {
                     <Typography>Number of Generations</Typography>
                     <Slider
                         min={10}
-                        max={100}
+                        max={500}
                         defaultValue={10}
                         aria-labelledby="discrete-slider-custom"
                         step={null}
