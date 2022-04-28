@@ -170,7 +170,7 @@ const AddParamsMenu = (() => {
     const [h, setH] = useState(0)
     const [s, setS] = useState(0)
     const [fr, setFr] = useState(0.000001)
-    const [br, setBr] = useState(0)
+    const [br, setBr] = useState(0.000001)
     const [pInit, setPInit] = useState(0)
     const [popSize, setPopSize] = useState(500)
     const [simLength, setSimLength] = useState(10)

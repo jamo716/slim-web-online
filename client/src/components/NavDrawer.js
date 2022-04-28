@@ -78,6 +78,16 @@ export const NavDrawer = ({children}) => {
             icon: <ComputerIcon color="primary"/>,
             path: "/selection"
         },
+        {
+            text: "Mutation-Selection Balance",
+            icon: <ComputerIcon color="primary"/>,
+            path: "/mutationselection"
+        },
+        {
+            text: "Genetic Drift",
+            icon: <ComputerIcon color="primary"/>,
+            path: "/drift"
+        },
     ]
 
     return (

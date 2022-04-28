@@ -26,12 +26,12 @@ const OutputChart = (() => {
         return data
     }
 
-    const convertDataForGraphFitness = (index) => {
-        const data = [["Generation", "w"]]
+    const convertDataForGraphAllele = (index) => {
+        const data = [["Generation", "Frequency of One Allele"]]
         for(let i = 0; i < graphData[0].data.length; i++){
             const generation = graphData[0].data[i].generation
-            const w = graphData[0].data[i].w
-            data.push([generation, w])
+            const alleleFreq = graphData[0].data[i].alleleFreq
+            data.push([generation, alleleFreq])
         }
         return data
     }
@@ -40,7 +40,7 @@ const OutputChart = (() => {
         data = convertDataForGraphF(0)
     }
     else if(graphData.length > 0 & buttonChoice === 2){
-        data = convertDataForGraphFitness(0)
+        data = convertDataForGraphAllele(0)
     }
    
     const optionsF = {
@@ -50,7 +50,7 @@ const OutputChart = (() => {
       };
 
       const optionsFitness = {
-        title: "Mean Fitness",
+        title: "Frequency of One Random Allele",
         curveType: "function",
         legend: { position: "bottom" },
       };

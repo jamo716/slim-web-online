@@ -26,16 +26,24 @@ const useStyles = makeStyles({
 
 const popSizeMarks = [
     {
-        value: 500,
-        label: "500"
+        value: 25,
+        label: "25"
     },
     {
-        value: 1000,
-        label: "1000"
+        value: 50,
+        label: "50"
     },
     {
-        value: 10000,
-        label: "10000"
+        value: 100,
+        label: "100"
+    },
+    {
+        value: 150,
+        label: "150"
+    },
+    {
+        value: 250,
+        label: "250"
     }
 ]
 
@@ -97,9 +105,9 @@ const AddParamsMenu = (() => {
                     
                     <Typography>Population Size</Typography>
                     <Slider
-                        min={500}
-                        max={10000}
-                        defaultValue={500}
+                        min={25}
+                        max={250}
+                        defaultValue={25}
                         aria-labelledby="discrete-slider-custom"
                         step={null}
                         valueLabelDisplay="auto"

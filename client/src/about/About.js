@@ -6,10 +6,11 @@ import InfoCard from "./components/InfoCard"
 
 import NeutralImage from "./media/neutral.jpg"
 import AssortativeImage from "./media/assortative.jpg"
-import FillerImage from "./media/filler.jpg"
+//import FillerImage from "./media/filler.jpg"
 import MutationImage from "./media/mutation.jpeg"
 import SelectionImage from "./media/selection.jpeg"
 import BalanceImage from "./media/balance.jpeg"
+import DriftImage from "./media/drift.jpeg"
 
 const useStyles = makeStyles({
   root: {
@@ -34,25 +35,25 @@ const infoCards = [
     image: MutationImage,
     path: "/mutation",
     title: "Simple Mutation Model",
-    abstract: "This is the abstract for another simulation"
+    abstract: "A two allele model of mutation."
   },
   {
     image: SelectionImage,
     path: "/selection",
     title: "Simple Selection Model",
-    abstract: "This is the abstract for another simulation"
+    abstract: "A two allele model of selection."
   },
   {
     image: BalanceImage,
     path: "/mutationselection",
     title: "Mutation-Selection Balance",
-    abstract: "This is the abstract for another simulation"
+    abstract: "A two allele model of mutation and selection."
   },
   {
-    image: FillerImage,
+    image: DriftImage,
     path: "/drift",
     title: "Genetic Drift",
-    abstract: "This is the abstract for another simulation"
+    abstract: "A simulation of genetic drift."
   }
 ]
 
